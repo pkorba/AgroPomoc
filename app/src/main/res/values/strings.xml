@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AgroPomoc</string>
+    <string name="button_sor">ŚOR</string>
+    <string name="button_calculator">Kalkulator</string>
+    <string name="button_notes">Notatnik</string>
+    <string name="button_todo">Zadania</string>
 </resources>
