@@ -1,0 +1,43 @@
+package com.piotrkorba.agropomoc;
+
+import android.app.Application;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
+public class AppRepository {
+    private ProductDao mProductDao;
+    private LiveData<List<ProductCoreInfo>> mAllProducts;
+
+    AppRepository (Application application) {
+        AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
+        mProductDao = db.productDao();
+        mAllProducts = db.productDao().getAllProducts();
+    }
+
+    LiveData<List<ProductCoreInfo>> getAllProducts() {
+        return mAllProducts;
+    }
+
+    public void insert (Product product) {
+        new insertAsyncTask(mProductDao).execute(product);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<Product, Void, Void> {
+
+        private ProductDao mAsyncTaskDao;
+
+        insertAsyncTask(ProductDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Product... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+}
