@@ -23,4 +23,7 @@ public interface ProductDao {
 
     @Query("SELECT * FROM product_table LIMIT 1")
     ProductCoreInfo[] anyProduct();
+
+    @Query("SELECT id, nazwa, uprawa, agrofag FROM product_table WHERE nazwa LIKE :searchQuery OR uprawa LIKE :searchQuery OR agrofag LIKE :searchQuery")
+    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery);
 }

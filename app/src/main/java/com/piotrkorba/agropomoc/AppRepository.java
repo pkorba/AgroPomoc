@@ -40,4 +40,7 @@ public class AppRepository {
         }
     }
 
+    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery) {
+        return mProductDao.searchForProducts(searchQuery);
+    }
 }

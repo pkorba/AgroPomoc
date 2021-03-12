@@ -25,4 +25,8 @@ public class ProductViewModel extends AndroidViewModel {
     public void insert(Product product) {
         mRepository.insert(product);
     }
+
+    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery) {
+        return mRepository.searchForProducts(searchQuery);
+    }
 }
