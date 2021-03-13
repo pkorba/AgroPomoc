@@ -29,10 +29,9 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // mProductViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
 
-        mProductViewModel.getAllProducts().observe(this, new Observer<List<ProductCoreInfo>>() {
+        mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
+        mProductViewModel.allProductsFiltered.observe(this, new Observer<List<ProductCoreInfo>>() {
             @Override
             public void onChanged(List<ProductCoreInfo> productCoreInfos) {
                 adapter.setProducts(productCoreInfos);
@@ -53,7 +52,7 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (query != null) {
-            searchForProducts(query);
+            mProductViewModel.searchForProducts(query);
         }
         return true;
     }
@@ -61,18 +60,8 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
     @Override
     public boolean onQueryTextChange(String query) {
         if (query != null) {
-            searchForProducts(query);
+            mProductViewModel.searchForProducts(query);
         }
         return true;
-    }
-
-    private void searchForProducts(String query) {
-        String searchQuery = "%" + query + "%";
-        mProductViewModel.searchForProducts(searchQuery).observe(this, new Observer<List<ProductCoreInfo>>() {
-            @Override
-            public void onChanged(List<ProductCoreInfo> productCoreInfos) {
-                adapter.setProducts(productCoreInfos);
-            }
-        });
     }
 }

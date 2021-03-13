@@ -5,28 +5,32 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.List;
 
 public class ProductViewModel extends AndroidViewModel {
     private AppRepository mRepository;
-    private LiveData<List<ProductCoreInfo>> mAllProducts;
+    LiveData<List<ProductCoreInfo>> allProductsFiltered;
+    private MutableLiveData<String> filter = new MutableLiveData<>("%");
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
         mRepository = new AppRepository(application);
-        mAllProducts = mRepository.getAllProducts();
-    }
-
-    LiveData<List<ProductCoreInfo>> getAllProducts() {
-        return mAllProducts;
+        allProductsFiltered = Transformations.switchMap(filter, v -> mRepository.searchForProducts(v));
     }
 
     public void insert(Product product) {
         mRepository.insert(product);
     }
 
-    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery) {
-        return mRepository.searchForProducts(searchQuery);
+    void  searchForProducts(String searchQuery) {
+        if (searchQuery.isEmpty()) {
+            searchQuery = "%";
+        } else {
+            searchQuery = "%" + searchQuery + "%";
+        }
+        filter.postValue(searchQuery);
     }
 }

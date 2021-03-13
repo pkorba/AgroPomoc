@@ -14,11 +14,6 @@ public class AppRepository {
     AppRepository (Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
         mProductDao = db.productDao();
-        mAllProducts = db.productDao().getAllProducts();
-    }
-
-    LiveData<List<ProductCoreInfo>> getAllProducts() {
-        return mAllProducts;
     }
 
     public void insert (Product product) {
