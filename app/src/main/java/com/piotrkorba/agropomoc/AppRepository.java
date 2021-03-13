@@ -9,7 +9,6 @@ import java.util.List;
 
 public class AppRepository {
     private ProductDao mProductDao;
-    private LiveData<List<ProductCoreInfo>> mAllProducts;
 
     AppRepository (Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);

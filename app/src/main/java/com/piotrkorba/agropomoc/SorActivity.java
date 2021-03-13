@@ -24,11 +24,9 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
 
         // Set up RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        // final ProductListAdapter adapter = new ProductListAdapter(this);
         adapter = new ProductListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
         mProductViewModel.allProductsFiltered.observe(this, new Observer<List<ProductCoreInfo>>() {
