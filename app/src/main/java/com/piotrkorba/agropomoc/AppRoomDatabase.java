@@ -51,6 +51,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             mDao.deleteAll();
+            mDao.resetAutoincrement();
 
             String str = NetworkUtils.getRegistryContent();
             if (str != null) {

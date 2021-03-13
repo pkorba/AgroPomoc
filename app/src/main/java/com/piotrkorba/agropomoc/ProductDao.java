@@ -26,4 +26,7 @@ public interface ProductDao {
 
     @Query("SELECT id, nazwa, uprawa, agrofag FROM product_table WHERE nazwa LIKE :searchQuery OR uprawa LIKE :searchQuery OR agrofag LIKE :searchQuery")
     LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery);
+
+    @Query("DELETE FROM sqlite_sequence WHERE name='product_table'")
+    void resetAutoincrement();
 }
