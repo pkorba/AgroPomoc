@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context=".SingleProductActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/single_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="Nazwa" />
+
+            <TextView
+                android:id="@+id/single_product_type_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_type_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Rodzaj środka treść" />
+
+            <TextView
+                android:id="@+id/single_product_active_ingredient_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_active_ingredient_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_active_ingredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Zawartość, nazwa zwyczajowa substancji czynnej treść" />
+
+            <TextView
+                android:id="@+id/single_product_crop_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_crop_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Uprawa treść" />
+
+            <TextView
+                android:id="@+id/single_product_pest_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_pest_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_pest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Agrofag treść" />
+
+            <TextView
+                android:id="@+id/single_product_dosage_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_dosage_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_dosage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Dawkowanie treść" />
+
+            <TextView
+                android:id="@+id/single_product_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_date_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Termin zastosowania środka treść" />
+
+            <TextView
+                android:id="@+id/single_product_minor_use_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_minor_use_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_minor_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Zastosowanie małoobszarowe treść" />
+
+            <TextView
+                android:id="@+id/single_product_pro_use_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_pro_use_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_pro_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Zastosowanie przez użytkownika profesjonalnego lub nieprofesjonalnego treść" />
+
+            <TextView
+                android:id="@+id/single_product_expiry_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_expiry_date_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_expiry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Termin ważności zezwolenia treść" />
+
+            <TextView
+                android:id="@+id/single_product_sell_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_sell_date_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_sell_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Okres na zyżycie istniejących zapasów dla sprzedaży i dystrybucji treść" />
+
+            <TextView
+                android:id="@+id/single_product_use_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/single_product_use_date_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/single_product_use_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Okres na zyżycie istniejących zapasów dla unieszkodliwiania, przechowywania i stosowania treść" />
+
+            <Button
+                android:id="@+id/button_download_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="@string/button_download_label" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

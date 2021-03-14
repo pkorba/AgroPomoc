@@ -50,13 +50,13 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mDao.deleteAll();
-            mDao.resetAutoincrement();
+            if (mDao.anyProduct().length < 1) {
+                mDao.deleteAll();
+                mDao.resetAutoincrement();
 
-            String str = NetworkUtils.getRegistryContent();
-            if (str != null) {
-                JSONArray ja = NetworkUtils.convertStringJSON(str);
-                if (mDao.anyProduct().length < 1) {
+                String str = NetworkUtils.getRegistryContent();
+                if (str != null) {
+                    JSONArray ja = NetworkUtils.convertStringJSON(str);
                     try {
                         for (int i = 0; i < ja.length(); ++i) {
                             JSONObject jo = ja.getJSONObject(i);

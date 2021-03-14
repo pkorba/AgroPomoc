@@ -16,7 +16,7 @@ public interface ProductDao {
     void deleteAll();
 
     @Query("SELECT * FROM product_table WHERE id == :id")
-    List<Product> getProduct(int id);
+    LiveData<Product> getProduct(int id);
 
     @Query("SELECT * FROM product_table LIMIT 1")
     ProductCoreInfo[] anyProduct();

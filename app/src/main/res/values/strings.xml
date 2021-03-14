@@ -5,4 +5,16 @@
     <string name="button_notes">Notatnik</string>
     <string name="button_todo">Zadania</string>
     <string name="search">Szukaj</string>
+    <string name="button_download_label">Pobierz etykietę</string>
+    <string name="single_product_use_date_label">OKRES NA ZYŻYCIE ISTNIEJĄCYCH ZAPASÓW DLA UNIESZKODLIWIANIA, PRZECHOWYWANIA I STOSOWANIA:</string>
+    <string name="single_product_sell_date_label">OKRES NA ZYŻYCIE ISTNIEJĄCYCH ZAPASÓW DLA SPRZEDAŻY I DYSTRYBUCJI:</string>
+    <string name="single_product_expiry_date_label">TERMIN WAŻNOŚCI ZEZWOLENIA:</string>
+    <string name="single_product_pro_use_label">ZASTOSOWANIE PRZEZ UŻYTKOWNIKA PROFESJONALNEGO LUB NIEPROFESJONALNEGO:</string>
+    <string name="single_product_minor_use_label">ZASTOSOWANIE MAŁOOBSZAROWE:</string>
+    <string name="single_product_date_label">TERMIN ZASTOSOWANIA ŚRODKA:</string>
+    <string name="single_product_dosage_label">DAWKOWANIE:</string>
+    <string name="single_product_pest_label">AGROFAG:</string>
+    <string name="single_product_crop_label">UPRAWA:</string>
+    <string name="single_product_active_ingredient_label">ZAWARTOŚĆ, NAZWA ZWYCZAJOWA SUBSTANCJI CZYNNEJ:</string>
+    <string name="single_product_type_label">RODZAJ ŚRODKA:</string>
 </resources>

@@ -11,13 +11,13 @@ import androidx.lifecycle.Transformations;
 import java.util.List;
 
 public class ProductViewModel extends AndroidViewModel {
-    private AppRepository mRepository;
+    private ProductRepository mRepository;
     LiveData<List<ProductCoreInfo>> allProductsFiltered;
     private MutableLiveData<String> filter = new MutableLiveData<>("%");
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
-        mRepository = new AppRepository(application);
+        mRepository = new ProductRepository(application);
         allProductsFiltered = Transformations.switchMap(filter, v -> mRepository.searchForProducts(v));
     }
 
@@ -25,7 +25,7 @@ public class ProductViewModel extends AndroidViewModel {
         mRepository.insert(product);
     }
 
-    void  searchForProducts(String searchQuery) {
+    void searchForProducts(String searchQuery) {
         if (searchQuery.isEmpty()) {
             searchQuery = "%";
         } else {

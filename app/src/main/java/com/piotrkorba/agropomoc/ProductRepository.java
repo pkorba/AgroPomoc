@@ -7,16 +7,24 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class AppRepository {
+public class ProductRepository {
     private ProductDao mProductDao;
 
-    AppRepository (Application application) {
+    ProductRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
         mProductDao = db.productDao();
     }
 
+    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery) {
+        return mProductDao.searchForProducts(searchQuery);
+    }
+
     public void insert (Product product) {
         new insertAsyncTask(mProductDao).execute(product);
+    }
+
+    LiveData<Product> getProduct(int id) {
+        return mProductDao.getProduct(id);
     }
 
     private static class insertAsyncTask extends AsyncTask<Product, Void, Void> {
@@ -32,9 +40,5 @@ public class AppRepository {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
-    }
-
-    LiveData<List<ProductCoreInfo>> searchForProducts(String searchQuery) {
-        return mProductDao.searchForProducts(searchQuery);
     }
 }

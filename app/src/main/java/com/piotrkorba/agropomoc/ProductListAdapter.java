@@ -1,10 +1,12 @@
 package com.piotrkorba.agropomoc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
     private final LayoutInflater mInflater;
     private List<ProductCoreInfo> mProducts;
+    public static final String PRODUCT_ID = "com.piotrkorba.agropomoc.extra.PRODUCT_ID";
 
     ProductListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -53,7 +56,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         else return 0;
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView productItemViewTitle;
         private TextView productItemViewCrop;
         private TextView productItemViewPest;
@@ -63,6 +66,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             productItemViewTitle = itemView.findViewById(R.id.textView_sor_name);
             productItemViewCrop = itemView.findViewById(R.id.textView_sor_crop);
             productItemViewPest = itemView.findViewById(R.id.textView_sor_pest);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int mPosition = getLayoutPosition();
+            ProductCoreInfo element = mProducts.get(mPosition);
+            // TODO: launch single product activity
+            Intent intent = new Intent(v.getContext(), SingleProductActivity.class);
+            intent.putExtra(PRODUCT_ID, element.id);
+            v.getContext().startActivity(intent);
         }
     }
 }
