@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SingleProductActivity extends AppCompatActivity {
     private SingleProductViewModel mProductViewModel;
@@ -18,6 +20,14 @@ public class SingleProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_product);
 
+        TextView productTypeLabel = findViewById(R.id.single_product_type_label);
+        TextView productActiveIngredientLabel = findViewById(R.id.single_product_active_ingredient_label);
+        TextView productCropLabel = findViewById(R.id.single_product_crop_label);
+        TextView productPestLabel = findViewById(R.id.single_product_pest_label);
+        TextView productDosageLabel = findViewById(R.id.single_product_dosage_label);
+        TextView productDateLabel = findViewById(R.id.single_product_date_label);
+        TextView productMinorUseLabel = findViewById(R.id.single_product_minor_use_label);
+        TextView productProUseLabel = findViewById(R.id.single_product_pro_use_label);
         TextView productName = findViewById(R.id.single_product_name);
         TextView productType = findViewById(R.id.single_product_type);
         TextView productActiveIngredient = findViewById(R.id.single_product_active_ingredient);
@@ -39,16 +49,58 @@ public class SingleProductActivity extends AppCompatActivity {
             @Override
             public void onChanged(Product product) {
                 productName.setText(product.getNazwa());
-                productType.setText(product.getRodzaj());
-                productActiveIngredient.setText(product.getSubstancjaCzynna());
-                productCrop.setText(product.getUprawa());
-                productPest.setText(product.getAgrofag());
-                productDosage.setText(product.getDawka());
-                productDate.setText(product.getTermin());
-                productMinorUse.setText(product.getMaloobszarowe());
-                productProUse.setText(product.getZastosowanieUzytkownik());
+                if (!product.getRodzaj().equals("null")) {
+                    productType.setText(product.getRodzaj());
+                    productTypeLabel.setVisibility(View.VISIBLE);
+                    productType.setVisibility(View.VISIBLE);
+                }
+                if (!product.getSubstancjaCzynna().equals("null")) {
+                    productActiveIngredient.setText(product.getSubstancjaCzynna());
+                    productActiveIngredientLabel.setVisibility(View.VISIBLE);
+                    productActiveIngredient.setVisibility(View.VISIBLE);
+                }
+                if (!product.getUprawa().equals("null")) {
+                    productCrop.setText(product.getUprawa());
+                    productCropLabel.setVisibility(View.VISIBLE);
+                    productCrop.setVisibility(View.VISIBLE);
+                }
+                if (!product.getAgrofag().equals("null")) {
+                    productPest.setText(product.getAgrofag());
+                    productPestLabel.setVisibility(View.VISIBLE);
+                    productPest.setVisibility(View.VISIBLE);
+                }
+                if (!product.getDawka().equals("null")) {
+                    productDosage.setText(product.getDawka());
+                    productDosageLabel.setVisibility(View.VISIBLE);
+                    productDosage.setVisibility(View.VISIBLE);
+                }
+                if (!product.getTermin().equals("null")) {
+                    productDate.setText(product.getTermin());
+                    productDateLabel.setVisibility(View.VISIBLE);
+                    productDate.setVisibility(View.VISIBLE);
+                }
+                if (!product.getMaloobszarowe().equals("null")) {
+                    productMinorUse.setText(product.getMaloobszarowe());
+                    productMinorUseLabel.setVisibility(View.VISIBLE);
+                    productMinorUse.setVisibility(View.VISIBLE);
+                }
+                if (!product.getZastosowanieUzytkownik().equals("null")) {
+                    productProUse.setText(product.getZastosowanieUzytkownik());
+                    productProUseLabel.setVisibility(View.VISIBLE);
+                    productProUse.setVisibility(View.VISIBLE);
+                }
 
-                // TODO: przekonwertowanie na datetime i dodanie warunkowego wyświetlania
+                Calendar expiryDate = Calendar.getInstance();
+                expiryDate.setTimeInMillis(product.getTerminZezw());
+                productExpiryDate.setText(String.format("%02d.%02d.%d", expiryDate.get(Calendar.DAY_OF_MONTH), expiryDate.get(Calendar.MONTH), expiryDate.get(Calendar.YEAR)));
+
+                Calendar sellDate = Calendar.getInstance();
+                sellDate.setTimeInMillis(product.getTerminZezw());
+                productSellDate.setText(String.format("%02d.%02d.%d", sellDate.get(Calendar.DAY_OF_MONTH), sellDate.get(Calendar.MONTH), sellDate.get(Calendar.YEAR)));
+
+                Calendar useDate = Calendar.getInstance();
+                useDate.setTimeInMillis(product.getTerminZezw());
+                productUseDate.setText(String.format("%02d.%02d.%d", useDate.get(Calendar.DAY_OF_MONTH), useDate.get(Calendar.MONTH), useDate.get(Calendar.YEAR)));
             }
         });
     }
