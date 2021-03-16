@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_type_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -45,7 +46,7 @@
                 android:id="@+id/single_product_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Rodzaj środka treść"
                 android:visibility="gone"/>
 
@@ -54,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_active_ingredient_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -62,7 +64,7 @@
                 android:id="@+id/single_product_active_ingredient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Zawartość, nazwa zwyczajowa substancji czynnej treść"
                 android:visibility="gone" />
 
@@ -71,6 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_crop_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -79,7 +82,7 @@
                 android:id="@+id/single_product_crop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Uprawa treść"
                 android:visibility="gone" />
 
@@ -88,6 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_pest_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -96,7 +100,7 @@
                 android:id="@+id/single_product_pest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Agrofag treść"
                 android:visibility="gone" />
 
@@ -105,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_dosage_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -113,7 +118,7 @@
                 android:id="@+id/single_product_dosage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Dawkowanie treść"
                 android:visibility="gone" />
 
@@ -122,6 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_date_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -130,7 +136,7 @@
                 android:id="@+id/single_product_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Termin zastosowania środka treść"
                 android:visibility="gone" />
 
@@ -139,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_minor_use_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -147,7 +154,7 @@
                 android:id="@+id/single_product_minor_use"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Zastosowanie małoobszarowe treść"
                 android:visibility="gone" />
 
@@ -156,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_pro_use_label"
                 android:textStyle="italic"
                 android:visibility="gone" />
@@ -164,7 +172,7 @@
                 android:id="@+id/single_product_pro_use"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Zastosowanie przez użytkownika profesjonalnego lub nieprofesjonalnego treść"
                 android:visibility="gone" />
 
@@ -174,13 +182,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/single_product_expiry_date_label"
+                android:textSize="12sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/single_product_expiry_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Termin ważności zezwolenia treść" />
 
             <TextView
@@ -189,13 +198,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/single_product_sell_date_label"
+                android:textSize="12sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/single_product_sell_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Okres na zyżycie istniejących zapasów dla sprzedaży i dystrybucji treść" />
 
             <TextView
@@ -203,6 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:text="@string/single_product_use_date_label"
                 android:textStyle="italic" />
 
@@ -210,7 +221,7 @@
                 android:id="@+id/single_product_use_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Okres na zyżycie istniejących zapasów dla unieszkodliwiania, przechowywania i stosowania treść" />
 
             <Button
