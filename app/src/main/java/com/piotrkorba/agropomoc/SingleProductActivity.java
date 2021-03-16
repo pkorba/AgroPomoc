@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Calendar;
-import java.util.Date;
 
 public class SingleProductActivity extends AppCompatActivity {
     private SingleProductViewModel mProductViewModel;
+    private Button downloadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class SingleProductActivity extends AppCompatActivity {
         TextView productExpiryDate = findViewById(R.id.single_product_expiry_date);
         TextView productSellDate = findViewById(R.id.single_product_sell_date);
         TextView productUseDate = findViewById(R.id.single_product_use_date);
+        downloadButton = findViewById(R.id.button_download_label);
         Intent intent = getIntent();
 
         int productId = intent.getIntExtra(ProductListAdapter.PRODUCT_ID, 0);
@@ -101,6 +105,21 @@ public class SingleProductActivity extends AppCompatActivity {
                 Calendar useDate = Calendar.getInstance();
                 useDate.setTimeInMillis(product.getTerminZezw());
                 productUseDate.setText(String.format("%02d.%02d.%d", useDate.get(Calendar.DAY_OF_MONTH), useDate.get(Calendar.MONTH), useDate.get(Calendar.YEAR)));
+
+                if (product.getEtykieta().equals("null")) {
+                    downloadButton.setEnabled(false);
+                }
+
+                downloadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (NetworkUtils.checkNetworkConnection(getApplicationContext())) {
+                            NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
+                        } else {
+                            Snackbar.make(v, "Nie można pobrać etykiety. Sprawdź połączenie z Internetem.", 5);
+                        }
+                    }
+                });
             }
         });
     }

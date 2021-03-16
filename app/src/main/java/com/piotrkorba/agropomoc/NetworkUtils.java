@@ -1,5 +1,12 @@
 package com.piotrkorba.agropomoc;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -76,5 +83,28 @@ public class NetworkUtils {
             e.printStackTrace();
         }
         return ja;
+    }
+
+    public static boolean checkNetworkConnection(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void downloadLabel(Context context, String labelUrl, String name) {
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(labelUrl));
+        request.setDescription(name);
+        request.setTitle(context.getString(R.string.app_name));
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name + ".pdf");
+        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
     }
 }
