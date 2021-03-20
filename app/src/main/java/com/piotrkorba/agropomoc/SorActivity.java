@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,6 +46,18 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                mProductViewModel.update();
+                Toast.makeText(getApplicationContext(), "Reee", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                // Do nothing
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

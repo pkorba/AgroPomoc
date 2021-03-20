@@ -17,4 +17,5 @@
     <string name="single_product_crop_label">UPRAWA:</string>
     <string name="single_product_active_ingredient_label">ZAWARTOŚĆ, NAZWA ZWYCZAJOWA SUBSTANCJI CZYNNEJ:</string>
     <string name="single_product_type_label">RODZAJ ŚRODKA:</string>
+    <string name="update">Sprawdź aktualizacje</string>
 </resources>

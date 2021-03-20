@@ -21,8 +21,8 @@ public class ProductViewModel extends AndroidViewModel {
         allProductsFiltered = Transformations.switchMap(filter, v -> mRepository.searchForProducts(v));
     }
 
-    public void insert(Product product) {
-        mRepository.insert(product);
+    void update() {
+        mRepository.update(getApplication());
     }
 
     void searchForProducts(String searchQuery) {

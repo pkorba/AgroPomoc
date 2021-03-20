@@ -1,9 +1,14 @@
 package com.piotrkorba.agropomoc;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -19,25 +24,57 @@ public class ProductRepository {
         return mProductDao.searchForProducts(searchQuery);
     }
 
-    public void insert (Product product) {
-        new insertAsyncTask(mProductDao).execute(product);
-    }
-
     LiveData<Product> getProduct(int id) {
         return mProductDao.getProduct(id);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Product, Void, Void> {
+    public void update(Context context) {
+        new updateAsyncTask(context, mProductDao).execute();
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ProductDao mAsyncTaskDao;
+        private Context mContext;
 
-        insertAsyncTask(ProductDao dao) {
+        updateAsyncTask(Context context, ProductDao dao) {
             mAsyncTaskDao = dao;
+            mContext = context;
         }
 
         @Override
-        protected Void doInBackground(final Product... params) {
-            mAsyncTaskDao.insert(params[0]);
+        protected Void doInBackground(Void... voids) {
+            if (NetworkUtils.checkNetworkConnection(mContext)) {
+                String dataString = NetworkUtils.getRegistryContent();
+                if (dataString != null) {
+                    mAsyncTaskDao.deleteAll();
+                    JSONArray ja = NetworkUtils.convertStringJSON(dataString);
+                    try {
+                        for (int i = 0; i < ja.length(); ++i) {
+                            JSONObject jo = ja.getJSONObject(i);
+                            Product product = new Product(
+                                    jo.getString("nazwa"),
+                                    jo.getString("NrZezw"),
+                                    jo.getLong("TerminZezw"),
+                                    jo.getLong("TerminDoSprzedazy"),
+                                    jo.getLong("TerminDoStosowania"),
+                                    jo.getString("Rodzaj"),
+                                    jo.getString("Substancja_czynna"),
+                                    jo.getString("uprawa"),
+                                    jo.getString("agrofag"),
+                                    jo.getString("dawka"),
+                                    jo.getString("termin"),
+                                    jo.getString("nazwa_grupy"),
+                                    jo.getString("maloobszarowe"),
+                                    jo.getString("zastosowanie/uzytkownik"),
+                                    jo.getString("etykieta"));
+                            mAsyncTaskDao.insert(product);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             return null;
         }
     }

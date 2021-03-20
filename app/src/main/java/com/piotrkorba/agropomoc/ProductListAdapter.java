@@ -78,7 +78,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public void onClick(View v) {
             int mPosition = getLayoutPosition();
             ProductCoreInfo element = mProducts.get(mPosition);
-            // TODO: launch single product activity
             Intent intent = new Intent(v.getContext(), SingleProductActivity.class);
             intent.putExtra(PRODUCT_ID, element.id);
             v.getContext().startActivity(intent);
