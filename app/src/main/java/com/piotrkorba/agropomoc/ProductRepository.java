@@ -47,9 +47,10 @@ public class ProductRepository {
             if (NetworkUtils.checkNetworkConnection(mContext)) {
                 String dataString = NetworkUtils.getRegistryContent();
                 if (dataString != null) {
-                    mAsyncTaskDao.deleteAll();
-                    JSONArray ja = NetworkUtils.convertStringJSON(dataString);
                     try {
+                        JSONArray ja = NetworkUtils.convertStringJSON(dataString);
+                        mAsyncTaskDao.deleteAll();
+                        mAsyncTaskDao.resetAutoincrement();
                         for (int i = 0; i < ja.length(); ++i) {
                             JSONObject jo = ja.getJSONObject(i);
                             Product product = new Product(
