@@ -18,12 +18,12 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
     private final LayoutInflater mInflater;
     private List<ProductCoreInfo> mProducts;
-    private ProgressBar mProgressBar;
+    // private ProgressBar mProgressBar;
     public static final String PRODUCT_ID = "com.piotrkorba.agropomoc.extra.PRODUCT_ID";
 
     ProductListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
-        mProgressBar = ((Activity) context).findViewById(R.id.progressBar);
+        // mProgressBar = ((Activity) context).findViewById(R.id.progressBar);
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.productItemViewCrop.setText("Brak danych");
             holder.productItemViewPest.setText("Brak danych");
         }
-        mProgressBar.setVisibility(View.GONE);
+        // mProgressBar.setVisibility(View.GONE);
     }
 
     void setProducts(List<ProductCoreInfo> products) {

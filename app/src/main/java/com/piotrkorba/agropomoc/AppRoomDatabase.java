@@ -7,15 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@Database(entities = {Product.class}, version = 1, exportSchema = false)
+import java.util.Date;
+
+@Database(entities = {Product.class, RegistryInfo.class}, version = 4, exportSchema = false)
+@TypeConverters(DateConverter.class)
 public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract ProductDao productDao();
+    public abstract RegistryInfoDao RegistryInfoDao();
     private static AppRoomDatabase INSTANCE;
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
@@ -43,13 +48,24 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
         private final ProductDao mDao;
+        private final RegistryInfoDao registryDao;
 
         PopulateDbAsync(AppRoomDatabase db) {
             mDao = db.productDao();
+            registryDao = db.RegistryInfoDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            if (registryDao.getRegistryData().length < 1) {
+                registryDao.deleteAll();
+                registryDao.resetAutoincrement();
+                registryDao.insert(new RegistryInfo());
+                registryDao.updateDate(new Date(0));
+                registryDao.setLoadingScreen(false);
+                registryDao.setSnackbar(false);
+                registryDao.updateVersionNumber(0);
+            }
             if (mDao.anyProduct().length < 1) {
                 mDao.deleteAll();
                 mDao.resetAutoincrement();

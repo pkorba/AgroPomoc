@@ -10,30 +10,71 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class SorActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private ProductViewModel mProductViewModel;
-    ProductListAdapter adapter;
+    private ProductListAdapter adapter;
+    private ProgressBar mProgressBar;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sor);
 
+        mProgressBar = findViewById(R.id.progressBar);
+
         // Set up RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         adapter = new ProductListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
+
+        mProductViewModel.mShowLoadingScreen.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                mProgressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+
         mProductViewModel.allProductsFiltered.observe(this, new Observer<List<ProductCoreInfo>>() {
             @Override
             public void onChanged(List<ProductCoreInfo> productCoreInfos) {
                 adapter.setProducts(productCoreInfos);
+            }
+        });
+
+        mProductViewModel.mDate.observe(this, new Observer<Date>() {
+            @Override
+            public void onChanged(Date date) {
+                Date currentDate = new Date();
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+                if (!fmt.format(currentDate).equals(fmt.format(date))) {
+                    mProductViewModel.checkForUpdates(currentDate);
+                }
+            }
+        });
+
+        mProductViewModel.mShowSnackbar.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    Snackbar snackbar = Snackbar.make(recyclerView, "Dostępna aktualizacja rejestru ŚOR", Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setAction("Aktualizuj", new updateClickListener());
+                    snackbar.show();
+                }
             }
         });
     }
@@ -51,8 +92,10 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
+                mProgressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
                 mProductViewModel.update();
-                Toast.makeText(getApplicationContext(), "Reee", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Aktualizowanie rejestru...", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 // Do nothing
@@ -74,5 +117,16 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
             mProductViewModel.searchForProducts(query);
         }
         return true;
+    }
+
+    public class updateClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            mProductViewModel.update();
+            Toast.makeText(getApplicationContext(), "Aktualizowanie rejestru...", Toast.LENGTH_LONG).show();
+        }
     }
 }

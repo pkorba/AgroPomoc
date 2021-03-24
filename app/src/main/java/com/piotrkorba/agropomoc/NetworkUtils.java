@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -26,6 +25,7 @@ public class NetworkUtils {
     private static final String HOST = "10.0.2.2";
     private static final int PORT = 8000;
     private static final String FILE = "rejestr.json";
+    private static final String VERSION_FILE = "version";
 
     static String getRegistryContent() {
         HttpURLConnection urlConnection = null;
@@ -95,6 +95,43 @@ public class NetworkUtils {
             return true;
         }
         return false;
+    }
+
+    public static int checkRegistryVersion() {
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        int registryVersion = -1;
+
+        try {
+            URL requestURL = new URL(PROTOCOL, HOST, PORT, VERSION_FILE);
+            urlConnection = (HttpURLConnection) requestURL.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // Get input stream.
+            InputStream inputStream = urlConnection.getInputStream();
+
+            // Create a buffered reader from input stream.
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line = reader.readLine();
+            registryVersion = Integer.parseInt(line);
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return registryVersion;
     }
 
     public static void downloadLabel(Context context, String labelUrl, String name) {
