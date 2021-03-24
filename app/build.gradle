@@ -61,4 +61,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$rootProject.archLifecycleVersion"
 
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 }

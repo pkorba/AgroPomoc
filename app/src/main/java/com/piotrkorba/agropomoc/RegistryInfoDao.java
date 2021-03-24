@@ -21,14 +21,14 @@ public interface RegistryInfoDao {
     @Query("SELECT updateDate FROM registryinfo_table WHERE id = 1")
     LiveData<Date> getDate();
 
+    @Query("SELECT updateDate FROM registryinfo_table WHERE id = 1")
+    Date getDateOneShot();
+
     @Query("SELECT versionSnackbar FROM registryinfo_table WHERE id = 1")
     LiveData<Boolean> showSnackbar();
 
     @Query("SELECT loadingScreen FROM registryinfo_table WHERE id = 1")
     LiveData<Boolean> showLoadingScreen();
-
-    @Query("SELECT versionSnackbar FROM registryinfo_table WHERE id = 1")
-    Boolean showSnackbarOneShot();
 
     @Query("SELECT loadingScreen FROM registryinfo_table WHERE id = 1")
     Boolean showLoadingScreenOneShot();

@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -63,8 +64,12 @@ public class ProductRepository {
         protected Void doInBackground(Void... voids) {
             if (NetworkUtils.checkNetworkConnection(mContext)) {
                 int remoteRegistryVersion = NetworkUtils.checkRegistryVersion();
-                if (remoteRegistryVersion > mAsyncRegDao.getVersionNumber()) {
+                Date localDate = mAsyncRegDao.getDateOneShot();
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+                if (remoteRegistryVersion > mAsyncRegDao.getVersionNumber() && !fmt.format(mDate).equals(fmt.format(localDate))) {
                     mAsyncRegDao.setSnackbar(true);
+                } else {
+                    mAsyncRegDao.setSnackbar(false);
                 }
             }
             mAsyncRegDao.updateDate(mDate);
