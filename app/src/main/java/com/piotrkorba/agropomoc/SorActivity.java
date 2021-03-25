@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,10 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
     private ProductListAdapter adapter;
     private ProgressBar mProgressBar;
     private RecyclerView recyclerView;
+    private SharedPreferences mPreferences;
+    private final String sharedPrefFile = "com.piotrkorba.agropomoc.agropomocsharedpref";
+    private Boolean firstSnackbar = false;
+    private final String FIRST_SNACKBAR = "com.piotrkorba.agropomoc.FIRST_SNACKBAR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,9 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
+
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        firstSnackbar = mPreferences.getBoolean(FIRST_SNACKBAR, false);
 
         mProductViewModel.mShowLoadingScreen.observe(this, new Observer<Boolean>() {
             @Override
@@ -62,6 +70,7 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
                 Date currentDate = new Date();
                 SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
                 if (!fmt.format(currentDate).equals(fmt.format(date))) {
+                    firstSnackbar = true;
                     mProductViewModel.checkForUpdates(currentDate);
                 }
             }
@@ -70,7 +79,8 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         mProductViewModel.mShowSnackbar.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
+                if (firstSnackbar && aBoolean) {
+                    firstSnackbar = false;
                     Snackbar snackbar = Snackbar.make(recyclerView, "Dostępna aktualizacja rejestru ŚOR", Snackbar.LENGTH_INDEFINITE);
                     snackbar.setAction("Aktualizuj", new updateClickListener());
                     snackbar.show();
@@ -128,5 +138,13 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
             mProductViewModel.update();
             Toast.makeText(getApplicationContext(), "Aktualizowanie rejestru...", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putBoolean(FIRST_SNACKBAR, firstSnackbar);
+        preferencesEditor.apply();
     }
 }

@@ -134,7 +134,7 @@ public class NetworkUtils {
         return registryVersion;
     }
 
-    public static void downloadLabel(Context context, String labelUrl, String name) {
+    public static long downloadLabel(Context context, String labelUrl, String name) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(labelUrl));
         request.setDescription(name);
         request.setTitle(context.getString(R.string.app_name));
@@ -142,6 +142,6 @@ public class NetworkUtils {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name + ".pdf");
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
+        return manager.enqueue(request);
     }
 }

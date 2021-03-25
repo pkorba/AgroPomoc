@@ -64,12 +64,8 @@ public class ProductRepository {
         protected Void doInBackground(Void... voids) {
             if (NetworkUtils.checkNetworkConnection(mContext)) {
                 int remoteRegistryVersion = NetworkUtils.checkRegistryVersion();
-                Date localDate = mAsyncRegDao.getDateOneShot();
-                SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-                if (remoteRegistryVersion > mAsyncRegDao.getVersionNumber() && !fmt.format(mDate).equals(fmt.format(localDate))) {
+                if (remoteRegistryVersion > mAsyncRegDao.getVersionNumber()) {
                     mAsyncRegDao.setSnackbar(true);
-                } else {
-                    mAsyncRegDao.setSnackbar(false);
                 }
             }
             mAsyncRegDao.updateDate(mDate);

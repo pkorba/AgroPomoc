@@ -4,19 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class SingleProductActivity extends AppCompatActivity {
     private SingleProductViewModel mProductViewModel;
     private Button downloadButton;
+    private long downloadID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,8 @@ public class SingleProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         int productId = intent.getIntExtra(ProductListAdapter.PRODUCT_ID, 0);
+
+        registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(SingleProductViewModel.class);
         mProductViewModel.getProduct(productId).observe(this, new Observer<Product>() {
@@ -114,7 +124,7 @@ public class SingleProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (NetworkUtils.checkNetworkConnection(getApplicationContext())) {
-                            NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
+                            downloadID = NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
                         } else {
                             Snackbar.make(v, "Nie można pobrać etykiety. Sprawdź połączenie z Internetem.", 5);
                         }
@@ -122,5 +132,42 @@ public class SingleProductActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(onDownloadComplete);
+    }
+
+    public BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (downloadID == id) {
+                // TODO: show snackbar with option to open file
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), "Pobrano etykietę", Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction("Otwórz", new SingleProductActivity.updateClickListener());
+                snackbar.show();
+            }
+        }
+    };
+
+    public class updateClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            // TODO: otwieranie pobranego pliku
+        }
+    }
+
+    protected void openFile(String fileName) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/pdf");
+            startActivity(intent);
+        } catch (Exception ex) {
+            Toast.makeText(this, "Brak aplikacji do otwierania plików PDF", Toast.LENGTH_SHORT).show();
+        }
     }
 }
