@@ -1,14 +1,18 @@
 package com.piotrkorba.agropomoc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +29,9 @@ public class SingleProductActivity extends AppCompatActivity {
     private SingleProductViewModel mProductViewModel;
     private Button downloadButton;
     private long downloadID;
+    private final String fileMimeType = "application/pdf";
+    private String fileUriString;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,7 @@ public class SingleProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         int productId = intent.getIntExtra(ProductListAdapter.PRODUCT_ID, 0);
-
+        mContext = this;
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(SingleProductViewModel.class);
@@ -143,31 +150,51 @@ public class SingleProductActivity extends AppCompatActivity {
     public BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            if (downloadID == id) {
-                // TODO: show snackbar with option to open file
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), "Pobrano etykietę", Snackbar.LENGTH_INDEFINITE);
-                snackbar.setAction("Otwórz", new SingleProductActivity.updateClickListener());
-                snackbar.show();
+            String action = intent.getAction();
+            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                DownloadManager dlMgr = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                long dlID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(downloadID);
+                Cursor cursor = dlMgr.query(query);
+                if (cursor.moveToFirst()) {
+                    int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                    if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columnIndex)) {
+                        fileUriString = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                        if (downloadID == dlID) {
+                            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), "Pobrano etykietę", Snackbar.LENGTH_INDEFINITE);
+                            snackbar.setAction("Otwórz", new SingleProductActivity.updateClickListener());
+                            snackbar.show();
+                        }
+                    }
+                }
             }
         }
     };
 
     public class updateClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
-            // TODO: otwieranie pobranego pliku
+            openFile(fileUriString);
         }
     }
 
-    protected void openFile(String fileName) {
-        try {
+    private void openFile(String uriString) {
+        Uri tagUri = Uri.parse(uriString);
+        if (tagUri != null) {
+            if (ContentResolver.SCHEME_FILE.equals(tagUri.getScheme())) {
+                File file = new File(tagUri.getPath());
+                tagUri = FileProvider.getUriForFile(mContext, "com.piotrkorba.provider", file);;
+            }
+
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/pdf");
-            startActivity(intent);
-        } catch (Exception ex) {
-            Toast.makeText(this, "Brak aplikacji do otwierania plików PDF", Toast.LENGTH_SHORT).show();
+            intent.setDataAndType(tagUri, fileMimeType);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                mContext.startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(mContext, "Nie można otworzyć pliku etykiety!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
