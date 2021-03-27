@@ -18,4 +18,8 @@
     <string name="single_product_active_ingredient_label">ZAWARTOŚĆ, NAZWA ZWYCZAJOWA SUBSTANCJI CZYNNEJ:</string>
     <string name="single_product_type_label">RODZAJ ŚRODKA:</string>
     <string name="update">Sprawdź aktualizacje</string>
+    <string name="textView_sor_crop_label">Uprawa: </string>
+    <string name="textView_sor_pest_label">Agrofag: </string>
+    <string name="update_textview">Aktualizowanie rejestru…</string>
+    <string name="check_update_text">Sprawdzanie aktualizacji…</string>
 </resources>

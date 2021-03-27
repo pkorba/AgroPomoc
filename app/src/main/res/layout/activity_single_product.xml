@@ -18,9 +18,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="16dp">
+            android:layout_marginEnd="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,6 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/button_download_label" />
             </LinearLayout>
         </ScrollView>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +27,7 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
     private ProductViewModel mProductViewModel;
     private ProductListAdapter adapter;
     private ProgressBar mProgressBar;
+    private TextView mUpdateTextview;
     private RecyclerView recyclerView;
     private SharedPreferences mPreferences;
     private final String sharedPrefFile = "com.piotrkorba.agropomoc.agropomocsharedpref";
@@ -37,12 +40,17 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         setContentView(R.layout.activity_sor);
 
         mProgressBar = findViewById(R.id.progressBar);
+        mUpdateTextview = findViewById(R.id.updateTextview);
 
         // Set up RecyclerView
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new ProductListAdapter(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         mProductViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ProductViewModel.class);
 
@@ -53,6 +61,7 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
             @Override
             public void onChanged(Boolean aBoolean) {
                 mProgressBar.setVisibility(View.GONE);
+                mUpdateTextview.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
@@ -103,9 +112,10 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         switch (item.getItemId()) {
             case R.id.refresh:
                 mProgressBar.setVisibility(View.VISIBLE);
+                mUpdateTextview.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), getString(R.string.check_update_text), Toast.LENGTH_SHORT).show();
                 mProductViewModel.update();
-                Toast.makeText(getApplicationContext(), "Aktualizowanie rejestru...", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 // Do nothing
@@ -134,9 +144,9 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         @Override
         public void onClick(View v) {
             mProgressBar.setVisibility(View.VISIBLE);
+            mUpdateTextview.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             mProductViewModel.update();
-            Toast.makeText(getApplicationContext(), "Aktualizowanie rejestru...", Toast.LENGTH_LONG).show();
         }
     }
 
