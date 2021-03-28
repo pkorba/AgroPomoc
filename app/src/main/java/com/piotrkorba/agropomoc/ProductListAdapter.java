@@ -1,29 +1,27 @@
 package com.piotrkorba.agropomoc;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Adapter for RecyclerView that displays a list of products.
+ */
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
     private final LayoutInflater mInflater;
     private List<ProductCoreInfo> mProducts;
-    // private ProgressBar mProgressBar;
     public static final String PRODUCT_ID = "com.piotrkorba.agropomoc.extra.PRODUCT_ID";
 
     ProductListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
-        // mProgressBar = ((Activity) context).findViewById(R.id.progressBar);
     }
 
     @NonNull
@@ -40,15 +38,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.productItemViewTitle.setText(current.nazwa);
             holder.productItemViewCrop.setText(current.uprawa);
             holder.productItemViewPest.setText(current.agrofag);
-        } else {
-            // Data not ready
-            holder.productItemViewTitle.setText("Brak danych");
-            holder.productItemViewCrop.setText("Brak danych");
-            holder.productItemViewPest.setText("Brak danych");
         }
-        // mProgressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * Associate list of products with this adapter.
+     * @param products
+     */
     void setProducts(List<ProductCoreInfo> products) {
         mProducts = products;
         notifyDataSetChanged();
@@ -74,6 +70,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             itemView.setOnClickListener(this);
         }
 
+        // Start Single Product Activity when element is clicked.
         @Override
         public void onClick(View v) {
             int mPosition = getLayoutPosition();

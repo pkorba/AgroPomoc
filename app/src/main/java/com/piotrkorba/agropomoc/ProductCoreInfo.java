@@ -3,6 +3,9 @@ package com.piotrkorba.agropomoc;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 
+/**
+ * Class used to retrieve product name, crop name, and pest name from the database.
+ */
 public class ProductCoreInfo {
     @NonNull
     @ColumnInfo(name = "id")

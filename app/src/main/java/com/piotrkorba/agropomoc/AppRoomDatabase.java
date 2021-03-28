@@ -16,12 +16,18 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+/**
+ * AppRoomDatabase contains code responsible for creating the database.
+ * AppRoomDatabase is implemented as a singleton to prevent having multiple instances opened at the same time.
+ * Once database is created, all interactions with database happen through repository classes.
+ */
 @Database(entities = {Product.class, RegistryInfo.class}, version = 4, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract ProductDao productDao();
     public abstract RegistryInfoDao RegistryInfoDao();
     private static AppRoomDatabase INSTANCE;
+    // This callback is called when the database has opened.
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
@@ -46,6 +52,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    // Populate the database with initial data set only if database is empty.
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
         private final ProductDao mDao;
         private final RegistryInfoDao registryDao;
@@ -57,19 +64,21 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            // Populate registryinfo_table
             if (registryDao.getRegistryData().length < 1) {
                 registryDao.deleteAll();
                 registryDao.resetAutoincrement();
                 registryDao.insert(new RegistryInfo());
+                // Set initial date to Unix Epoch
                 registryDao.updateDate(new Date(0));
                 registryDao.setLoadingScreen(false);
+                // Do not show update snackbar.
                 registryDao.setSnackbar(false);
                 registryDao.updateVersionNumber(0);
             }
             if (mDao.anyProduct().length < 1) {
                 mDao.deleteAll();
                 mDao.resetAutoincrement();
-
                 String str = NetworkUtils.getRegistryContent();
                 if (str != null) {
                     JSONArray ja = NetworkUtils.convertStringJSON(str);

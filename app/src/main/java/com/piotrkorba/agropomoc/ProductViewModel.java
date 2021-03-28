@@ -11,6 +11,9 @@ import androidx.lifecycle.Transformations;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Interface between UI and data layer represented by the repository.
+ */
 public class ProductViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     LiveData<List<ProductCoreInfo>> allProductsFiltered;
@@ -22,8 +25,11 @@ public class ProductViewModel extends AndroidViewModel {
     public ProductViewModel(@NonNull Application application) {
         super(application);
         mRepository = new ProductRepository(application);
+        // Change LiveData object value based on filter content.
         allProductsFiltered = Transformations.switchMap(filter, v -> mRepository.searchForProducts(v));
+        // Provide observable object which tells UI when to show progress bar.
         mShowLoadingScreen = mRepository.showLoadingScreen();
+        // Provide observable object which tells UI when to show snackbar reminding user about available update.
         mShowSnackbar = mRepository.showSnackbar();
         mDate = mRepository.getDate();
     }
@@ -36,6 +42,10 @@ public class ProductViewModel extends AndroidViewModel {
         mRepository.update(getApplication());
     }
 
+    /**
+     * Updates filter used to change values displayed in RecyclerView list.
+     * @param searchQuery String value to search for in the database
+     */
     void searchForProducts(String searchQuery) {
         if (searchQuery.isEmpty()) {
             searchQuery = "%";

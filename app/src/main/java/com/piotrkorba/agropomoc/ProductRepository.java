@@ -14,6 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * ProductRepository class implements methods used to run database queries through data access objects (DAOs).
+ * All long running queries run in the background.
+ */
 public class ProductRepository {
     private ProductDao mProductDao;
     private RegistryInfoDao mRegistryInfoDao;
@@ -48,6 +52,16 @@ public class ProductRepository {
         new checkForUpdatesAsyncTask(context, mRegistryInfoDao, currentDate).execute();
     }
 
+    public void update(Context context) {
+        new updateAsyncTask(context, mProductDao, mRegistryInfoDao).execute();
+    }
+
+    // Below are static inner classes used to run tasks on separate threads in the background.
+
+    /**
+     * Checks if network connection is currently available.
+     * If so, downloads current ŚOR registry version from remote server.
+     */
     public static class checkForUpdatesAsyncTask extends AsyncTask <Void, Void, Void> {
 
         private RegistryInfoDao mAsyncRegDao;
@@ -62,21 +76,24 @@ public class ProductRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            // Check if network connection is available
             if (NetworkUtils.checkNetworkConnection(mContext)) {
+                // Get info about version number from remote server.
                 int remoteRegistryVersion = NetworkUtils.checkRegistryVersion();
                 if (remoteRegistryVersion > mAsyncRegDao.getVersionNumber()) {
+                    // Signal the need to show 'update avaliable' dialog in UI.
                     mAsyncRegDao.setSnackbar(true);
                 }
             }
+            // Update the date of last update check.
             mAsyncRegDao.updateDate(mDate);
             return null;
         }
     }
 
-    public void update(Context context) {
-        new updateAsyncTask(context, mProductDao, mRegistryInfoDao).execute();
-    }
-
+    /**
+     * Update the ŚOR registry in database.
+     */
     private static class updateAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ProductDao mAsyncProdDao;
@@ -91,16 +108,22 @@ public class ProductRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            // Check if network connection is available
             if (NetworkUtils.checkNetworkConnection(mContext)) {
+                // Get registry version from remote server
                 int remoteVersion = NetworkUtils.checkRegistryVersion();
                 int localVersion = mAsyncRegDao.getVersionNumber();
                 if (localVersion < remoteVersion) {
+                    // Download new registry
                     String dataString = NetworkUtils.getRegistryContent();
                     if (dataString != null) {
                         try {
+                            // Convert registry to JSON
                             JSONArray ja = NetworkUtils.convertStringJSON(dataString);
+                            // Clear current content of the database
                             mAsyncProdDao.deleteAll();
                             mAsyncProdDao.resetAutoincrement();
+                            // Put JSON content into database
                             for (int i = 0; i < ja.length(); ++i) {
                                 JSONObject jo = ja.getJSONObject(i);
                                 Product product = new Product(
@@ -126,9 +149,11 @@ public class ProductRepository {
                         }
                     }
                     mAsyncRegDao.updateVersionNumber(remoteVersion);
+                    // Reset the flag used to signal the need to update the registry.
                     mAsyncRegDao.setSnackbar(false);
                 }
             }
+            // Show loading screen during update process. More info in activity class.
             boolean loadingScreen = mAsyncRegDao.showLoadingScreenOneShot();
             mAsyncRegDao.setLoadingScreen(!loadingScreen);
             return null;

@@ -7,6 +7,9 @@ import androidx.room.Query;
 
 import java.util.Date;
 
+/**
+ * Data Access Object (DAO) used to access and change registry metadata.
+ */
 @Dao
 public interface RegistryInfoDao {
     @Insert

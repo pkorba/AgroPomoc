@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity class that represents single product in the database.
+ */
 @Entity(tableName = "product_table")
 public class Product {
     @PrimaryKey(autoGenerate = true)

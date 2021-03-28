@@ -22,4 +22,8 @@
     <string name="textView_sor_pest_label">Agrofag: </string>
     <string name="update_textview">Aktualizowanie rejestru…</string>
     <string name="check_update_text">Sprawdzanie aktualizacji…</string>
+    <string name="no_internet_connection">Nie można pobrać etykiety. Sprawdź połączenie z Internetem.</string>
+    <string name="sor_product_downloaded_snackbar">Pobrano etykietę</string>
+    <string name="sor_product_downloaded_button_snackbar">Otwórz</string>
+    <string name="cannot_open_file_snackbar">Nie można otworzyć pliku etykiety!</string>
 </resources>

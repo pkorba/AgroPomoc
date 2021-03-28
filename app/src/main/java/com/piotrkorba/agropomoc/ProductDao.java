@@ -7,6 +7,9 @@ import androidx.room.Query;
 
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) for a product.
+ */
 @Dao
 public interface ProductDao {
     @Insert

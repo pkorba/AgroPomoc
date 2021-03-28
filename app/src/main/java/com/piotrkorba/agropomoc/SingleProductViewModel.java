@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/**
+ * Interface between UI and data layer represented by the repository.
+ */
 public class SingleProductViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
 

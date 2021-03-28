@@ -18,15 +18,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class contains methods used to fetch assets through the network.
+ */
 public class NetworkUtils {
-    private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
-
     private static final String PROTOCOL = "http";
     private static final String HOST = "10.0.2.2";
     private static final int PORT = 8000;
     private static final String FILE = "rejestr.json";
     private static final String VERSION_FILE = "version";
 
+    /**
+     * Used to download full ŚOR registry content from remote server.
+     * @return String object containing registry content
+     */
     static String getRegistryContent() {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -55,7 +60,6 @@ public class NetworkUtils {
             if (builder.length() == 0)
                 return null;
             registryJSONString = builder.toString();
-            Log.d(LOG_TAG, registryJSONString);
 
         } catch(IOException e) {
             e.printStackTrace();
@@ -74,17 +78,27 @@ public class NetworkUtils {
         return registryJSONString;
     }
 
-    static JSONArray convertStringJSON(String str) {
+    /**
+     * Used to convert data downloaded using {@link #getRegistryContent()}
+     * @param registryString registry content as a String
+     * @return registry content as JSONArray of JSONObjects
+     */
+    static JSONArray convertStringJSON(String registryString) {
         // Convert String to JSON array
         JSONArray ja = null;
         try {
-            ja = new JSONArray(str);
+            ja = new JSONArray(registryString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return ja;
     }
 
+    /**
+     * Used to check availability of network connection.
+     * @param context activity context
+     * @return true if network connection available, false otherwise
+     */
     public static boolean checkNetworkConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
@@ -97,6 +111,10 @@ public class NetworkUtils {
         return false;
     }
 
+    /**
+     * Used to get newest ŚOR registry version number from remote server
+     * @return newest ŚOR registry version number available on remote server
+     */
     public static int checkRegistryVersion() {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -134,6 +152,13 @@ public class NetworkUtils {
         return registryVersion;
     }
 
+    /**
+     * Used to download ŚOR labels to system download directory.
+     * @param context application context
+     * @param labelUrl Uri string of ŚOR label.
+     * @param name name of ŚOR label.
+     * @return an ID for the download, unique across the system. This ID is used to make future calls related to this download
+     */
     public static long downloadLabel(Context context, String labelUrl, String name) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(labelUrl));
         request.setDescription(name);

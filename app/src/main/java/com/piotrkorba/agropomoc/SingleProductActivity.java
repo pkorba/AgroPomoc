@@ -25,6 +25,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.File;
 import java.util.Calendar;
 
+/**
+ * Displays detailed data about particular Product. Allows downloading Product data sheet.
+ */
 public class SingleProductActivity extends AppCompatActivity {
     private SingleProductViewModel mProductViewModel;
     private Button downloadButton;
@@ -69,6 +72,7 @@ public class SingleProductActivity extends AppCompatActivity {
         mProductViewModel.getProduct(productId).observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
+                // Display labels only for values which are not null.
                 productName.setText(product.getNazwa());
                 if (!product.getRodzaj().equals("null")) {
                     productType.setText(product.getRodzaj());
@@ -130,10 +134,12 @@ public class SingleProductActivity extends AppCompatActivity {
                 downloadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Check network connection
                         if (NetworkUtils.checkNetworkConnection(getApplicationContext())) {
+                            // Download data sheet for a Product and get its unique ID.
                             downloadID = NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
                         } else {
-                            Snackbar.make(v, "Nie można pobrać etykiety. Sprawdź połączenie z Internetem.", 5);
+                            Snackbar.make(v, R.string.no_internet_connection, 5);
                         }
                     }
                 });
@@ -147,6 +153,10 @@ public class SingleProductActivity extends AppCompatActivity {
         unregisterReceiver(onDownloadComplete);
     }
 
+    /**
+     * BroadcastReceiver that reacts to intents announcing completed download process.
+     * Creates snackbar with an option to open downloaded file.
+     */
     public BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -162,8 +172,9 @@ public class SingleProductActivity extends AppCompatActivity {
                     if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columnIndex)) {
                         fileUriString = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
                         if (downloadID == dlID) {
-                            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), "Pobrano etykietę", Snackbar.LENGTH_INDEFINITE);
-                            snackbar.setAction("Otwórz", new SingleProductActivity.updateClickListener());
+                            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), R.string.sor_product_downloaded_snackbar, Snackbar.LENGTH_INDEFINITE);
+                            // When clicked, open the file.
+                            snackbar.setAction(R.string.sor_product_downloaded_button_snackbar, new SingleProductActivity.updateClickListener());
                             snackbar.show();
                         }
                     }
@@ -179,6 +190,11 @@ public class SingleProductActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Uses FileProvider to get URI for downloaded file. Creates new intent to open file in default application
+     * used to handle PDF files in user's system.
+     * @param uriString Uri for a downloaded file provided by DownloadManager
+     */
     private void openFile(String uriString) {
         Uri tagUri = Uri.parse(uriString);
         if (tagUri != null) {
@@ -193,7 +209,7 @@ public class SingleProductActivity extends AppCompatActivity {
             try {
                 mContext.startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Toast.makeText(mContext, "Nie można otworzyć pliku etykiety!", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, getString(R.string.cannot_open_file_snackbar), Toast.LENGTH_LONG).show();
             }
         }
     }

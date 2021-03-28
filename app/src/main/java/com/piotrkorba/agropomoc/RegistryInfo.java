@@ -5,6 +5,9 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+/**
+ * Entity class that represents registry metadata in the database.
+ */
 @Entity(tableName = "registryinfo_table")
 public class RegistryInfo {
     @PrimaryKey(autoGenerate = true)
