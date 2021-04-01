@@ -26,4 +26,9 @@
     <string name="sor_product_downloaded_snackbar">Pobrano etykietę</string>
     <string name="sor_product_downloaded_button_snackbar">Otwórz</string>
     <string name="cannot_open_file_snackbar">Nie można otworzyć pliku etykiety!</string>
+    <string name="calculator_item1">Obliczanie ilości wysiewu</string>
+    <string name="calculator_item2">Obliczanie szacowanego plonu zboża</string>
+    <string name="calculator_item3">Obliczanie szacowanego plonu roślin strączkowych</string>
+    <string name="calculator_item4">Obliczanie gęstości nasadzenia</string>
+    <string name="calculator_item5">Obliczanie strat suszenia</string>
 </resources>

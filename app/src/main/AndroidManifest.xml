@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,13 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPomoc"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SingleProductActivity"
-            android:label = "Informacje o produkcie"
+        <activity android:name=".CalculatorActivity"
+            android:label = "Kalkulator"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=
+                    "com.piotrkorba.agropomoc.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".SingleProductActivity"
+            android:label="Informacje o produkcie"
             android:parentActivityName=".SorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.piotrkorba.agropomoc.SorActivity" />
-            ></activity>
+        </activity>
         <activity
             android:name=".SorActivity"
             android:label="ŚOR"
@@ -38,6 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.piotrkorba.provider"
@@ -45,9 +54,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>
