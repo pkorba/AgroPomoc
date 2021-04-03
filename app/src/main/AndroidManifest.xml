@@ -15,6 +15,14 @@
         android:theme="@style/Theme.AgroPomoc"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PotentialYieldLegumes"
+            android:label="Szacowany plon roślin strączkowych"
+            android:parentActivityName=".CalculatorActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.piotrkorba.agropomoc.CalculatorActivity" />
+        </activity>
+        <activity
             android:name=".PotentialYieldCereal"
             android:label="Szacowany plon zboża"
             android:parentActivityName=".CalculatorActivity">
