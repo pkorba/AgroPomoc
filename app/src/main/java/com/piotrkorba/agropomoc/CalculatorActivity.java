@@ -34,11 +34,12 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent = new Intent(this, PotentialYieldLegumes.class);
                 startActivity(intent);
                 break;
-            /*
+
             case R.id.calculator_item4:
                 intent = new Intent(this, PlantingDensity.class);
                 startActivity(intent);
                 break;
+                /*
             case R.id.calculator_item5:
                 intent = new Intent(this, DryingLosses.class);
                 startActivity(intent);

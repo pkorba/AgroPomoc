@@ -52,8 +52,8 @@ public class Calculator {
     }
 
     public static double panting(double distanceBetweenRows, double distanceBetweenPlants) {
-        // odstęp między rzędami [cm] * odstęp między roślinami [cm] = ziarna/m²
-        return distanceBetweenPlants * distanceBetweenRows;
+        // (100 / odstęp między rzędami [cm]) * (100 / odstęp między roślinami [cm]) = rośliny/Ha
+        return (100.0 / distanceBetweenPlants) * (100.0 / distanceBetweenRows) * 10000;
     }
 
     public static double weightLossOnDrying(double initialWeight, double initialMoisture, double finalMoisture) {
