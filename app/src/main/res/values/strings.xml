@@ -31,4 +31,12 @@
     <string name="calculator_item3">Obliczanie szacowanego plonu roślin strączkowych</string>
     <string name="calculator_item4">Obliczanie gęstości nasadzenia</string>
     <string name="calculator_item5">Obliczanie strat suszenia</string>
+
+    <string-array name="areaDensity">
+        <item>kg/Ha</item>
+        <item>kg/a</item>
+        <item>t/Ha</item>
+        <item>t/a</item>
+    </string-array>
+
 </resources>

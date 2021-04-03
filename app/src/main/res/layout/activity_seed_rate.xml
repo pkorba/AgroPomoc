@@ -18,12 +18,25 @@
 
     <TextView
         android:id="@+id/calc1result"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toStartOf="@+id/calc1result_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calc1result_label"
         tools:text="Wynik" />
+
+    <Spinner
+        android:id="@+id/calc1result_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calc1tgw"
+        app:layout_constraintStart_toStartOf="@+id/calc1tgw_unit"
+        app:layout_constraintTop_toTopOf="@+id/calc1result" />
 
     <TextView
         android:id="@+id/calc1tgw_label"
@@ -36,12 +49,13 @@
 
     <TextView
         android:id="@+id/calc1tgw_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="g"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/calc1tgw"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calc1tgw" />
 
     <EditText
@@ -75,12 +89,13 @@
 
     <TextView
         android:id="@+id/calc1population_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="szt./m²"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/calc1population"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calc1population" />
 
     <TextView
@@ -104,12 +119,13 @@
 
     <TextView
         android:id="@+id/calc1germination_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="%"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/calc1seed_emergency"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calc1seed_emergency" />
 
     <TextView
@@ -133,12 +149,13 @@
 
     <TextView
         android:id="@+id/calc1emergence_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="%"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/calc1field_emergency"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calc1field_emergency" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
