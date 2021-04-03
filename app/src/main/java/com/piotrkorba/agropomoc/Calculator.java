@@ -37,13 +37,13 @@ public class Calculator {
     }
 
     public static double seedRate(double plantPopulation, double totalGrainWeight, double seedEmergency, double fieldEmergency) {
-        // ((MTZ [g] * obsada[szt./m²] * 100) / (siła kiełkowania nasion [%] * siła kiełkowania pola [%]) = ilość wysiewu w kg/ha
-        return (plantPopulation * totalGrainWeight * 100) / (seedEmergency * fieldEmergency);
+        // ((MTZ [g] * obsada[szt./m²] * 100) / (siła kiełkowania nasion [%] * siła kiełkowania pola [%]) * 0.1= ilość wysiewu w g/m²
+        return (plantPopulation * totalGrainWeight * 100) / (seedEmergency * fieldEmergency) * 0.1;
     }
 
     public static double potentialYieldCereal(double grainsPerSpike, double totalGrainWeight, double spikesPerArea) {
         // SP [g/m²] = liczba kłosów na jednostce powierzchni [szt./m²] * (liczba ziaren w kłosie * masa 1000 ziaren [g] / 1000)
-        return spikesPerArea * (grainsPerSpike * totalGrainWeight / 1000) * 0.01;
+        return spikesPerArea * (grainsPerSpike * totalGrainWeight / 1000);
     }
 
     public static double potentialYieldLegumes(double podsPerPlant, double totalGrainWeight, double plantsPerArea, double grainsPerPod) {

@@ -25,11 +25,11 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent = new Intent(this, SeedRateActivity.class);
                 startActivity(intent);
                 break;
-            /*
             case R.id.calculator_item2:
                 intent = new Intent(this, PotentialYieldCereal.class);
                 startActivity(intent);
                 break;
+            /*
             case R.id.calculator_item3:
                 intent = new Intent(this, PotentialYieldLegumes.class);
                 startActivity(intent);

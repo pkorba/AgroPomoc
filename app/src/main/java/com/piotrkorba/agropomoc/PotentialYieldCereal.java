@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,9 +17,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class SeedRateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class PotentialYieldCereal extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    EditText tgw, population, seedEmergency, fieldEmergency;
+    EditText tgw, population, grainAmount;
     TextView result;
     DecimalFormat df;
     Calculator.Unit mUnit = Calculator.Unit.kgpHa;
@@ -29,32 +28,25 @@ public class SeedRateActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seed_rate);
+        setContentView(R.layout.activity_potential_yield_cereal);
 
-        result = findViewById(R.id.calc1result);
+        result = findViewById(R.id.calc2result);
         result.setText("–");
-        tgw = findViewById(R.id.calc1tgw);
-        population = findViewById(R.id.calc1population);
-        seedEmergency = findViewById(R.id.calc1seed_emergency);
-        fieldEmergency = findViewById(R.id.calc1field_emergency);
+        tgw = findViewById(R.id.calc2tgw);
+        population = findViewById(R.id.calc2population);
+        grainAmount = findViewById(R.id.calc2grain_amount);
 
         // Add listeners to EditText fields
         tgw.addTextChangedListener(textWatcher);
         population.addTextChangedListener(textWatcher);
-        seedEmergency.addTextChangedListener(textWatcher);
-        fieldEmergency.addTextChangedListener(textWatcher);
-
-        // Set input filter on percentage input fields (max 100%)
-        InputFilter ifMinMax[] = {new InputFilterMinMax(1, 100)};
-        seedEmergency.setFilters(ifMinMax);
-        fieldEmergency.setFilters(ifMinMax);
+        grainAmount.addTextChangedListener(textWatcher);
 
         // Set up result formatter and rounding mode
         df = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         df.setRoundingMode(RoundingMode.DOWN);
 
         // Create the spinner.
-        Spinner spinner = findViewById(R.id.calc1result_spinner);
+        Spinner spinner = findViewById(R.id.calc2result_spinner);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(this);
         }
@@ -113,15 +105,13 @@ public class SeedRateActivity extends AppCompatActivity implements AdapterView.O
     public void calculationPerform() {
         String tgwStr = tgw.getText().toString();
         String populationStr = population.getText().toString();
-        String seedEmergencyStr = seedEmergency.getText().toString();
-        String fieldEmergencyStr = fieldEmergency.getText().toString();
-        if (!tgwStr.isEmpty() && !populationStr.isEmpty() && !seedEmergencyStr.isEmpty() && !fieldEmergencyStr.isEmpty()) {
+        String grainAmountStr = grainAmount.getText().toString();
+        if (!tgwStr.isEmpty() && !populationStr.isEmpty() && !grainAmountStr.isEmpty()) {
             try {
                 double tgwDb = Double.parseDouble(tgwStr);
                 double populationDb = Double.parseDouble(populationStr);
-                double seedEmergencyDb = Double.parseDouble(seedEmergencyStr);
-                double fieldEmergencyDb = Double.parseDouble(fieldEmergencyStr);
-                double resultDb = Calculator.seedRate(populationDb, tgwDb, seedEmergencyDb, fieldEmergencyDb);
+                double grainAmountDb = Double.parseDouble(grainAmountStr);
+                double resultDb = Calculator.potentialYieldCereal(grainAmountDb, tgwDb, populationDb);
                 result.setText(df.format(Calculator.areaDensityConverter(resultDb, mUnit)));
             } catch (NumberFormatException e) {
                 // Fail silently
