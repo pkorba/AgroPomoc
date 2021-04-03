@@ -14,15 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPomoc"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CalculatorActivity"
-            android:label = "Kalkulator"
+        <activity
+            android:name=".SeedRateActivity"
+            android:label="Ilość wysiewu"
+            android:parentActivityName=".CalculatorActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.piotrkorba.agropomoc.CalculatorActivity" />
+        </activity>
+        <activity
+            android:name=".CalculatorActivity"
+            android:label="Kalkulator"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=
-                    "com.piotrkorba.agropomoc.MainActivity" />
+                android:value="com.piotrkorba.agropomoc.MainActivity" />
         </activity>
-
         <activity
             android:name=".SingleProductActivity"
             android:label="Informacje o produkcie"

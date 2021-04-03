@@ -19,12 +19,13 @@ public class CalculatorActivity extends AppCompatActivity {
         TextView textView = (TextView) view;
         int id = textView.getId();
         Intent intent;
-        /* TODO: Create and launch calculator target acitivities
+        // TODO: Create and launch calculator target acitivities
         switch (id) {
             case R.id.calculator_item1:
                 intent = new Intent(this, SeedRateActivity.class);
                 startActivity(intent);
                 break;
+            /*
             case R.id.calculator_item2:
                 intent = new Intent(this, PotentialYieldCereal.class);
                 startActivity(intent);
@@ -41,9 +42,9 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent = new Intent(this, DryingLosses.class);
                 startActivity(intent);
                 break;
+            */
             default:
                 // Do nothing
         }
-        */
     }
 }
