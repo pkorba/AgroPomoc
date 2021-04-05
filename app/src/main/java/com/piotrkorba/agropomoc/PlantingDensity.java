@@ -21,6 +21,8 @@ public class PlantingDensity extends AppCompatActivity implements AdapterView.On
     EditText rowDistance, plantDistance;
     TextView result;
     DecimalFormat df;
+    Calculator.Unit mUnit = Calculator.Unit.plantpHa;
+    String[] unitArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,28 @@ public class PlantingDensity extends AppCompatActivity implements AdapterView.On
         // Add listeners to EditText fields
         plantDistance.addTextChangedListener(textWatcher);
         rowDistance.addTextChangedListener(textWatcher);
+
         // Set up result formatter and rounding mode
         df = new DecimalFormat("#", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         df.setRoundingMode(RoundingMode.DOWN);
+
+        // Create the spinner.
+        Spinner spinner = findViewById(R.id.calc4result_spinner);
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(this);
+        }
+
+        // Create an ArrayAdapter using the string array and default spinner layout.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.plantDensity, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner.
+        if (spinner != null) {
+            spinner.setAdapter(adapter);
+        }
+        unitArray = this.getResources().getStringArray(R.array.plantDensity);
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -60,6 +81,11 @@ public class PlantingDensity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String spinnerLabel = parent.getItemAtPosition(position).toString();
+        if (spinnerLabel.equals(unitArray[0])) {
+            mUnit = Calculator.Unit.plantpHa;
+        } else if (spinnerLabel.equals(unitArray[1])) {
+            mUnit = Calculator.Unit.plantpm2;
+        }
         calculationPerform();
     }
 
@@ -76,7 +102,7 @@ public class PlantingDensity extends AppCompatActivity implements AdapterView.On
                 double rowDistanceDb = Double.parseDouble(rowDistanceStr);
                 double plantDistanceDb = Double.parseDouble(plantDistanceStr);
                 double resultDb = Calculator.panting(rowDistanceDb, plantDistanceDb);
-                result.setText(df.format(resultDb));
+                result.setText(df.format(Calculator.areaDensityConverter(resultDb, mUnit)));
             } catch (NumberFormatException e) {
                 // Fail silently
             }

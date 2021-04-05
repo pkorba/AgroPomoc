@@ -8,7 +8,9 @@ public class Calculator {
         tpHa,
         tpa,
         kgpHa,
-        kgpa
+        kgpa,
+        plantpHa,
+        plantpm2
     }
 
     public static double areaDensityConverter(double grammePerM2, Unit unit) {
@@ -21,6 +23,10 @@ public class Calculator {
                 return grammePerM2 * 10;
             case kgpa:
                 return grammePerM2 * 0.1;
+            case plantpHa:
+                return grammePerM2 * 10000;
+            case plantpm2:
+                return grammePerM2;
             default:
                 return grammePerM2;
         }
@@ -53,7 +59,7 @@ public class Calculator {
 
     public static double panting(double distanceBetweenRows, double distanceBetweenPlants) {
         // (100 / odstęp między rzędami [cm]) * (100 / odstęp między roślinami [cm]) = rośliny/Ha
-        return (100.0 / distanceBetweenPlants) * (100.0 / distanceBetweenRows) * 10000;
+        return (100.0 / distanceBetweenPlants) * (100.0 / distanceBetweenRows);
     }
 
     public static double weightLossOnDrying(double initialWeight, double initialMoisture, double finalMoisture) {

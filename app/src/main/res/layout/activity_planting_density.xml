@@ -22,19 +22,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toStartOf="@+id/calc4result_unit"
+        app:layout_constraintEnd_toStartOf="@+id/calc4result_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calc4result_label"
         tools:text="Wynik" />
 
-    <TextView
-        android:id="@+id/calc4result_unit"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/calc4result_spinner"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="rośliny/Ha"
+        android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/calc4result"
-        app:layout_constraintStart_toStartOf="@+id/calc4plant_distance_unit" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/calc4plant_distance_unit"
+        app:layout_constraintTop_toTopOf="@+id/calc4result" />
 
     <TextView
         android:id="@+id/calc4plant_distance_label"
@@ -71,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Odległość między rzędami"
+        android:text="Odległość między środkami rzędów"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calc4plant_distance" />
 
@@ -80,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Odległość między rzędami"
+        android:hint="Odległość między środkami rzędów"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calc4row_distance_label" />
