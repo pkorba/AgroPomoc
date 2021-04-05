@@ -39,12 +39,10 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent = new Intent(this, PlantingDensity.class);
                 startActivity(intent);
                 break;
-                /*
             case R.id.calculator_item5:
                 intent = new Intent(this, DryingLosses.class);
                 startActivity(intent);
                 break;
-            */
             default:
                 // Do nothing
         }

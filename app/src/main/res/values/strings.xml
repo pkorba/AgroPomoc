@@ -44,4 +44,9 @@
         <item>rośliny/m²</item>
     </string-array>
 
+    <string-array name="weightUnits">
+        <item>kg</item>
+        <item>t</item>
+    </string-array>
+
 </resources>
