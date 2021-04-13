@@ -41,7 +41,8 @@
         app:layout_constraintEnd_toStartOf="@+id/button_todo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sor" />
+        app:layout_constraintTop_toBottomOf="@+id/button_sor"
+        android:onClick="onCLickNotesButton" />
 
     <Button
         android:id="@+id/button_todo"

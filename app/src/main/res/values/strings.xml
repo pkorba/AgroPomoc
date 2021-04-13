@@ -84,6 +84,7 @@
     <string name="calc4row_distance_label">Odległość między środkami rzędów</string>
     <string name="calc4row_distance">Odległość między środkami rzędów</string>
     <string name="calc4row_distance_unit">cm</string>
+    <string name="title_activity_notes">Notatki</string>
 
     <string-array name="areaDensity">
         <item>kg/Ha</item>
@@ -101,5 +102,4 @@
         <item>kg</item>
         <item>t</item>
     </string-array>
-
 </resources>
