@@ -2,7 +2,9 @@ package com.piotrkorba.agropomoc;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -14,19 +16,19 @@ import java.util.List;
  */
 @Dao
 public interface NoteDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Note note);
 
     @Update
-    void updateNote(int id);
+    void updateNote(Note note);
 
-    @Query("DELETE FROM notes_table WHERE id = :id")
-    void deleteNote(int id);
+    @Delete
+    void deleteNote(Note note);
 
     @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table WHERE id = :id")
     LiveData<Note> getNote(int id);
 
-    @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table")
+    @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table ORDER BY date DESC")
     LiveData<List<Note>> getAllNote();
 
     @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table WHERE date BETWEEN :startDate AND :endDate")

@@ -2,6 +2,7 @@ package com.piotrkorba.agropomoc;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -23,6 +24,17 @@ public class Note {
     private String imageUri;
 
     public Note(@NonNull Date date, long currencyInteger, long currenctDecimal, String title, String content, String imageUri) {
+        this.date = date;
+        this.currencyInteger = currencyInteger;
+        this.currenctDecimal = currenctDecimal;
+        this.title = title;
+        this.content = content;
+        this.imageUri = imageUri;
+    }
+
+    @Ignore
+    public Note(int id, @NonNull Date date, long currencyInteger, long currenctDecimal, String title, String content, String imageUri) {
+        this.id = id;
         this.date = date;
         this.currencyInteger = currencyInteger;
         this.currenctDecimal = currenctDecimal;

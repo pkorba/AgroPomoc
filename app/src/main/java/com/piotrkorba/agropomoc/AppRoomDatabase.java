@@ -21,11 +21,12 @@ import java.util.Date;
  * AppRoomDatabase is implemented as a singleton to prevent having multiple instances opened at the same time.
  * Once database is created, all interactions with database happen through repository classes.
  */
-@Database(entities = {Product.class, RegistryInfo.class}, version = 4, exportSchema = false)
+@Database(entities = {Product.class, RegistryInfo.class, Note.class}, version = 5, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract ProductDao productDao();
     public abstract RegistryInfoDao RegistryInfoDao();
+    public abstract NoteDao noteDao();
     private static AppRoomDatabase INSTANCE;
     // This callback is called when the database has opened.
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
