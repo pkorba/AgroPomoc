@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,11 +50,11 @@ public class ProductRepository {
     }
 
     public void checkForUpdates(Context context, Date currentDate) {
-        new checkForUpdatesAsyncTask(context, mRegistryInfoDao, currentDate).execute();
+        new checkForUpdatesAsyncTask(new WeakReference<>(context), mRegistryInfoDao, currentDate).execute();
     }
 
     public void update(Context context) {
-        new updateAsyncTask(context, mProductDao, mRegistryInfoDao).execute();
+        new updateAsyncTask(new WeakReference<>(context), mProductDao, mRegistryInfoDao).execute();
     }
 
     // Below are static inner classes used to run tasks on separate threads in the background.
@@ -65,10 +66,10 @@ public class ProductRepository {
     public static class checkForUpdatesAsyncTask extends AsyncTask <Void, Void, Void> {
 
         private RegistryInfoDao mAsyncRegDao;
-        private Context mContext;
+        private WeakReference<Context> mContext;
         private Date mDate;
 
-        checkForUpdatesAsyncTask(Context context, RegistryInfoDao regDao, Date currentDate) {
+        checkForUpdatesAsyncTask(WeakReference<Context> context, RegistryInfoDao regDao, Date currentDate) {
             mContext = context;
             mAsyncRegDao = regDao;
             mDate = currentDate;
@@ -98,9 +99,9 @@ public class ProductRepository {
 
         private ProductDao mAsyncProdDao;
         private RegistryInfoDao mAsyncRegDao;
-        private Context mContext;
+        private WeakReference<Context> mContext;
 
-        updateAsyncTask(Context context, ProductDao prodDao, RegistryInfoDao regDao) {
+        updateAsyncTask(WeakReference<Context> context, ProductDao prodDao, RegistryInfoDao regDao) {
             mAsyncProdDao = prodDao;
             mAsyncRegDao = regDao;
             mContext = context;

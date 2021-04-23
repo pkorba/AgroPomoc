@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 /**
@@ -135,7 +136,7 @@ public class SingleProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Check network connection
-                        if (NetworkUtils.checkNetworkConnection(getApplicationContext())) {
+                        if (NetworkUtils.checkNetworkConnection(new WeakReference<>(getApplicationContext()))) {
                             // Download data sheet for a Product and get its unique ID.
                             downloadID = NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
                         } else {

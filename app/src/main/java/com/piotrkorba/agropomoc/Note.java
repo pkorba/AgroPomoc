@@ -18,26 +18,26 @@ public class Note {
     @NonNull
     private Date date;
     private long currencyInteger;
-    private long currenctDecimal;
+    private long currencyDecimal;
     private String title;
     private String content;
     private String imageUri;
 
-    public Note(@NonNull Date date, long currencyInteger, long currenctDecimal, String title, String content, String imageUri) {
+    public Note(@NonNull Date date, long currencyInteger, long currencyDecimal, String title, String content, String imageUri) {
         this.date = date;
         this.currencyInteger = currencyInteger;
-        this.currenctDecimal = currenctDecimal;
+        this.currencyDecimal = currencyDecimal;
         this.title = title;
         this.content = content;
         this.imageUri = imageUri;
     }
 
     @Ignore
-    public Note(int id, @NonNull Date date, long currencyInteger, long currenctDecimal, String title, String content, String imageUri) {
+    public Note(int id, @NonNull Date date, long currencyInteger, long currencyDecimal, String title, String content, String imageUri) {
         this.id = id;
         this.date = date;
         this.currencyInteger = currencyInteger;
-        this.currenctDecimal = currenctDecimal;
+        this.currencyDecimal = currencyDecimal;
         this.title = title;
         this.content = content;
         this.imageUri = imageUri;
@@ -68,12 +68,12 @@ public class Note {
         this.currencyInteger = currencyInteger;
     }
 
-    public long getCurrenctDecimal() {
-        return currenctDecimal;
+    public long getCurrencyDecimal() {
+        return currencyDecimal;
     }
 
-    public void setCurrenctDecimal(long currenctDecimal) {
-        this.currenctDecimal = currenctDecimal;
+    public void setCurrencyDecimal(long currencyDecimal) {
+        this.currencyDecimal = currencyDecimal;
     }
 
     public String getTitle() {

@@ -47,6 +47,11 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                             .fallbackToDestructiveMigration()
                             .addCallback(sRoomDatabaseCallback)
                             .build();
+
+                    // Room database is not populated with initial data after invoking .build() on a database builder.
+                    // Migrations and callbacks are triggered only on real read/write operation.
+                    // Perform any read/write operation to overcome this behaviour.
+                    INSTANCE.query("SELECT 1", null);
                 }
             }
         }
@@ -77,6 +82,8 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 registryDao.setSnackbar(false);
                 registryDao.updateVersionNumber(0);
             }
+            /*
+            // Don't download records on the first run
             if (mDao.anyProduct().length < 1) {
                 mDao.deleteAll();
                 mDao.resetAutoincrement();
@@ -109,6 +116,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                     }
                 }
             }
+             */
             return null;
         }
     }

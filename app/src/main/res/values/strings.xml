@@ -85,6 +85,9 @@
     <string name="calc4row_distance">Odległość między środkami rzędów</string>
     <string name="calc4row_distance_unit">cm</string>
     <string name="title_activity_notes">Notatki</string>
+    <string name="textview_notes_item_date">YYYY/MM/DD</string>
+    <string name="textview_notes_item_title">Tytuł notatki</string>
+    <string name="textview_notes_item_currency">XXX.XX zł</string>
 
     <string-array name="areaDensity">
         <item>kg/Ha</item>
@@ -102,4 +105,8 @@
         <item>kg</item>
         <item>t</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notes_radio_button_expense">Wydatek</string>
+    <string name="notes_radio_button_income">Wpływ</string>
 </resources>

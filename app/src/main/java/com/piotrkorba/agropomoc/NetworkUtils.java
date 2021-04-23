@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -99,8 +100,8 @@ public class NetworkUtils {
      * @param context activity context
      * @return true if network connection available, false otherwise
      */
-    public static boolean checkNetworkConnection(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean checkNetworkConnection(WeakReference<Context> context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.get().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
         if (connectivityManager != null) {
             networkInfo = connectivityManager.getActiveNetworkInfo();

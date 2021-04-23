@@ -25,12 +25,12 @@ public interface NoteDao {
     @Delete
     void deleteNote(Note note);
 
-    @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table WHERE id = :id")
+    @Query("SELECT id, date, currencyInteger, currencyDecimal, title, content, imageUri FROM notes_table WHERE id = :id")
     LiveData<Note> getNote(int id);
 
-    @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table ORDER BY date DESC")
+    @Query("SELECT id, date, currencyInteger, currencyDecimal, title, content, imageUri FROM notes_table ORDER BY date DESC")
     LiveData<List<Note>> getAllNote();
 
-    @Query("SELECT id, date, currencyInteger, currenctDecimal, title, content, imageUri FROM notes_table WHERE date BETWEEN :startDate AND :endDate")
-    LiveData<Note> getNotesBetween(Date startDate, Date endDate);
+    @Query("SELECT id, date, currencyInteger, currencyDecimal, title, content, imageUri FROM notes_table WHERE date BETWEEN :startDate AND :endDate")
+    LiveData<List<Note>> getNotesBetween(Date startDate, Date endDate);
 }

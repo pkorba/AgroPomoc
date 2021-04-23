@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Force populate database
+        AppRoomDatabase.getDatabase(getApplication());
     }
 
     public void onClickSorButton(View view) {

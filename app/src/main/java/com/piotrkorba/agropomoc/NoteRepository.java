@@ -26,7 +26,7 @@ public class NoteRepository {
         return mAllNotes;
     }
 
-    LiveData<Note> getNotesBetween(Date startDate, Date endDate) {
+    LiveData<List<Note>> getNotesBetween(Date startDate, Date endDate) {
         return mNoteDao.getNotesBetween(startDate, endDate);
     }
 
