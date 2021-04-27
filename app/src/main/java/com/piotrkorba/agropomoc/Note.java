@@ -5,13 +5,14 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Entity class that represents single note in the database.
  */
 @Entity(tableName = "notes_table")
-public class Note {
+public class Note implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

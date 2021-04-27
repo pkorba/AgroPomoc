@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
+    public static final String EXTRA_NOTE = "com.piotrkorba.agropomoc.EXTRA_NOTE";
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private NoteViewModel mNoteViewModel;
@@ -82,7 +83,8 @@ public class NotesActivity extends AppCompatActivity {
                 Date date = (Date) data.getSerializableExtra(NewNoteActivity.EXTRA_DATE);
                 long currencyInteger = data.getLongExtra(NewNoteActivity.EXTRA_CURRENCY_INTEGER, 0);
                 long currencyDecimal = data.getLongExtra(NewNoteActivity.EXTRA_CURRENCY_DECIMAL, 0);
-                Note note = new Note(date, currencyInteger, currencyDecimal, title, content, "");
+                String imageUri = data.getStringExtra(NewNoteActivity.EXTRA_IMAGE);
+                Note note = new Note(date, currencyInteger, currencyDecimal, title, content, imageUri);
                 mNoteViewModel.insert(note);
             }
         } else {

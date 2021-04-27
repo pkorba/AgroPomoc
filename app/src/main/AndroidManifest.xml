@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -14,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPomoc"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewNoteActivity"></activity>
+        <activity android:name=".NoteDetailActivity"></activity>
+        <activity android:name=".NewNoteActivity" />
         <activity
             android:name=".NotesActivity"
             android:label="@string/title_activity_notes"
