@@ -36,12 +36,8 @@ public class NewNoteActivity extends AppCompatActivity {
     private SimpleDateFormat fmt;
     private String imageUriStr = "";
     private long currencySign = -1;
-    public static final String EXTRA_TITLE = "com.piotrkorba.agropomoc.TITLE";
-    public static final String EXTRA_CONTENT = "com.piotrkorba.agropomoc.CONTENT";
-    public static final String EXTRA_DATE = "com.piotrkorba.agropomoc.DATE";
-    public static final String EXTRA_CURRENCY_INTEGER = "com.piotrkorba.agropomoc.CURRENCY_INTEGER";
-    public static final String EXTRA_CURRENCY_DECIMAL = "com.piotrkorba.agropomoc.CURRENCY_DECIMAL";
-    public static final String EXTRA_IMAGE = "com.piotrkorba.agropomoc.IMAGE";
+    private int id = -1;
+    public static final String EXTRA_NEW_NOTE = "com.piotrkorba.agropomoc.NEW_NOTE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +55,32 @@ public class NewNoteActivity extends AppCompatActivity {
         // Set input filter to allow only valid currency than can be held in two long values
         InputFilter[] ifCurrency = {new InputFilterCurrency(18, 2)};
         currency.setFilters(ifCurrency);
+
+        Intent intent = getIntent();
+        // Get the extras (if there are any)
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey(NotesActivity.EXTRA_NOTE)) {
+                Note newNote = (Note) intent.getSerializableExtra(NotesActivity.EXTRA_NOTE);
+                id = newNote.getId();
+                title.setText(newNote.getTitle());
+                content.setText(newNote.getContent());
+                datePicker.setText(fmt.format(newNote.getDate()));
+                date = newNote.getDate();
+                long currencyInteger = newNote.getCurrencyInteger();
+                long currencyDecimal = newNote.getCurrencyDecimal();
+                currency.setText(String.valueOf(Math.abs(currencyInteger)) + "." + String.valueOf(Math.abs(currencyDecimal)));
+                if (currencyInteger >= 0 || currencyDecimal >= 0) {
+                    RadioButton radioButton = findViewById(R.id.notesRadioButtonIncome);
+                    currencySign = 1;
+                    radioButton.toggle();
+                }
+                if (!newNote.getImageUri().isEmpty()) {
+                    imageButton.setVisibility(View.VISIBLE);
+                    imageButton.setImageURI(Uri.parse(newNote.getImageUri()));
+                }
+            }
+        }
     }
 
     public void saveNote(View view) {
@@ -70,18 +92,22 @@ public class NewNoteActivity extends AppCompatActivity {
         if (titleStr.isEmpty() && currencyStr.isEmpty() && contentStr.isEmpty()) {
             setResult(RESULT_CANCELED, replyIntent);
         } else {
-            String[] currencyStrArr = currencyStr.split("[.]", 0);
-            long currencyInteger = Long.parseLong(currencyStrArr[0]) * currencySign;
+            long currencyInteger = 0;
             long currencyDecimal = 0;
-            if (currencyStrArr.length > 1) {
-                currencyDecimal = Long.parseLong(currencyStrArr[1]) * currencySign;
+            if (!currencyStr.isEmpty()) {
+                String[] currencyStrArr = currencyStr.split("[.]", 0);
+                currencyInteger = Long.parseLong(currencyStrArr[0]) * currencySign;
+                if (currencyStrArr.length > 1) {
+                    currencyDecimal = Long.parseLong(currencyStrArr[1]) * currencySign;
+                }
             }
-            replyIntent.putExtra(EXTRA_TITLE, titleStr);
-            replyIntent.putExtra(EXTRA_DATE, date);
-            replyIntent.putExtra(EXTRA_CONTENT, contentStr);
-            replyIntent.putExtra(EXTRA_CURRENCY_INTEGER, currencyInteger);
-            replyIntent.putExtra(EXTRA_CURRENCY_DECIMAL, currencyDecimal);
-            replyIntent.putExtra(EXTRA_IMAGE, imageUriStr);
+            Note note;
+            if (id == -1) {
+                note = new Note(date, currencyInteger, currencyDecimal, titleStr, contentStr, imageUriStr);
+            } else {
+                note = new Note(id, date, currencyInteger, currencyDecimal, titleStr, contentStr, imageUriStr);
+            }
+            replyIntent.putExtra(EXTRA_NEW_NOTE, note);
             setResult(RESULT_OK, replyIntent);
         }
         finish();

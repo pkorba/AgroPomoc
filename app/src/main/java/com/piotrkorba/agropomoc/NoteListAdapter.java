@@ -1,5 +1,6 @@
 package com.piotrkorba.agropomoc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     private List<Note> mNotes;
     private Context mContext;
     public static final String NOTE_ID = "com.piotrkorba.agropomoc.extra.NOTE_ID";
+    public static final int NOTE_DETAIL_REQUEST = 2;
+
 
     NoteListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -91,15 +94,12 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         // Start Single Product Activity when element is clicked.
         @Override
         public void onClick(View v) {
-            // TODO: Implement details view activity
-
             int mPosition = getLayoutPosition();
             Note element = mNotes.get(mPosition);
             Intent intent = new Intent(v.getContext(), NoteDetailActivity.class);
             intent.putExtra(NOTE_ID, element.getId());
             intent.putExtra(NotesActivity.EXTRA_NOTE, element);
-            v.getContext().startActivity(intent);
-
+            ((Activity) mContext).startActivityForResult(intent, NOTE_DETAIL_REQUEST);
         }
     }
 }

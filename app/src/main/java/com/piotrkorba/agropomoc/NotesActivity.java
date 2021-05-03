@@ -60,8 +60,7 @@ public class NotesActivity extends AppCompatActivity {
                 adapter.setNotes(notes);
             }
         });
-
-        // TODO: open add/edit existing/new note activity
+        
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,17 +77,32 @@ public class NotesActivity extends AppCompatActivity {
 
         if (requestCode == NEW_NOTE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
-                String title = data.getStringExtra(NewNoteActivity.EXTRA_TITLE);
-                String content = data.getStringExtra(NewNoteActivity.EXTRA_CONTENT);
-                Date date = (Date) data.getSerializableExtra(NewNoteActivity.EXTRA_DATE);
-                long currencyInteger = data.getLongExtra(NewNoteActivity.EXTRA_CURRENCY_INTEGER, 0);
-                long currencyDecimal = data.getLongExtra(NewNoteActivity.EXTRA_CURRENCY_DECIMAL, 0);
-                String imageUri = data.getStringExtra(NewNoteActivity.EXTRA_IMAGE);
-                Note note = new Note(date, currencyInteger, currencyDecimal, title, content, imageUri);
+                Note note = (Note) data.getSerializableExtra(NewNoteActivity.EXTRA_NEW_NOTE);
                 mNoteViewModel.insert(note);
+                Toast.makeText(getApplicationContext(), R.string.note_saved_toast, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.note_not_saved_toast, Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "Nie zapisano notatki", Toast.LENGTH_LONG).show();
+        } else if (requestCode == NoteListAdapter.NOTE_DETAIL_REQUEST && resultCode == 11) {
+            if (data !=  null) {
+                Note updateNote = (Note) data.getSerializableExtra(EXTRA_NOTE);
+                if (updateNote != null) {
+                    mNoteViewModel.update(updateNote);
+                    Toast.makeText(getApplicationContext(), R.string.note_edited_toast, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.note_something_wrong_toast, Toast.LENGTH_LONG).show();
+                }
+            }
+        } else if (requestCode == NoteListAdapter.NOTE_DETAIL_REQUEST && resultCode == 12) {
+            if (data !=  null) {
+                Note deleteNote = (Note) data.getSerializableExtra(EXTRA_NOTE);
+                if (deleteNote != null) {
+                    mNoteViewModel.delete(deleteNote);
+                    Toast.makeText(getApplicationContext(), R.string.note_deleted_toast, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.note_something_wrong_toast, Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 }

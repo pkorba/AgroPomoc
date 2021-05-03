@@ -15,8 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPomoc"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NoteDetailActivity"></activity>
-        <activity android:name=".NewNoteActivity" />
+        <activity
+            android:name=".NoteDetailActivity"
+            android:label="@string/title_activity_notes"
+            android:parentActivityName=".NotesActivity"
+            android:theme="@style/Theme.AgroPomoc.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.piotrkorba.agropomoc.NotesActivity" />
+        </activity>
+        <activity
+            android:name=".NewNoteActivity"
+            android:label="@string/title_activity_notes"
+            android:parentActivityName=".NotesActivity"
+            android:theme="@style/Theme.AgroPomoc.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.piotrkorba.agropomoc.NotesActivity" />
+        </activity>
         <activity
             android:name=".NotesActivity"
             android:label="@string/title_activity_notes"
