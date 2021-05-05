@@ -118,4 +118,10 @@
     <string name="note_edited_toast">Zmieniono notatkę</string>
     <string name="note_something_wrong_toast">Coś poszło nie tak…</string>
     <string name="note_deleted_toast">Usunięto notatkę</string>
+    <string name="note_balance_info">Wybierz okres na podstawie którego ma zostać obliczony bilans wydatków i wpłat:</string>
+    <string name="note_balance_hyphen">—</string>
+    <string name="note_balance_button">Oblicz</string>
+    <string name="note_balance_income_label">SUMA WPŁAT:</string>
+    <string name="note_balance_expense_label">SUMA WYDATKÓW:</string>
+    <string name="note_balance_balance_label">BILANS:</string>
 </resources>

@@ -1,13 +1,16 @@
 package com.piotrkorba.agropomoc;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -16,14 +19,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
     public static final String EXTRA_NOTE = "com.piotrkorba.agropomoc.EXTRA_NOTE";
+    public static final String EXTRA_NOTES_LIST = "com.piotrkorba.agropomoc.EXTRA_NOTES_LIST";
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private NoteViewModel mNoteViewModel;
@@ -103,6 +111,27 @@ public class NotesActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.note_something_wrong_toast, Toast.LENGTH_LONG).show();
                 }
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.note_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.note_balance:
+                Intent intent = new Intent(NotesActivity.this, NoteBalanceActivity.class);
+                ArrayList<Note> a = new ArrayList<>(mNoteViewModel.getAllNotes().getValue());
+                intent.putExtra(EXTRA_NOTES_LIST, a);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

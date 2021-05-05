@@ -88,7 +88,6 @@ public class NoteDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.note_edit:
-                // TODO: start new note activity with current note data
                 Intent intent = new Intent(NoteDetailActivity.this, NewNoteActivity.class);
                 intent.putExtra(NotesActivity.EXTRA_NOTE, note);
                 startActivityForResult(intent, EDIT_NOTE_ACTIVITY_REQUEST_CODE);
