@@ -59,7 +59,9 @@ public class NoteDetailActivity extends AppCompatActivity {
         content.setText(note.getContent());
         long currencyInteger = note.getCurrencyInteger();
         long currencyDecimal = note.getCurrencyDecimal();
-        currency.setText(String.valueOf(currencyInteger) + "." + String.valueOf(Math.abs(currencyDecimal)) + " zł");
+        String currencyStr = String.format("%d.%2d", currencyInteger, Math.abs(currencyDecimal)).replace(" ", "0");
+        currencyStr = currencyStr + " zł";
+        currency.setText(currencyStr);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

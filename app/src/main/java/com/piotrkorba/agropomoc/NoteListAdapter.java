@@ -43,7 +43,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         if (mNotes != null) {
             Note current = mNotes.get(position);
-            // TODO: set individual note fields
             long currencyInteger = current.getCurrencyInteger();
             long currencyDecimal = current.getCurrencyDecimal();
             if (currencyInteger < 0 || currencyDecimal < 0) {
@@ -53,7 +52,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
                 holder.noteItemViewCurrency.setTextColor(0xff26cb8c);
                 holder.noteItemViewImage.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_arrow_up_48));
             }
-            holder.noteItemViewCurrency.setText(String.format("%d.%d zł", currencyInteger, Math.abs(currencyDecimal)));
+            String currencyStr = String.format("%d.%2d", currencyInteger, Math.abs(currencyDecimal)).replace(" ", "0");
+            currencyStr = currencyStr + " zł";
+            holder.noteItemViewCurrency.setText(currencyStr);
             holder.noteItemViewTitle.setText(current.getTitle());
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy.MM.dd");
             holder.noteItemViewDate.setText(fmt.format(current.getDate()));

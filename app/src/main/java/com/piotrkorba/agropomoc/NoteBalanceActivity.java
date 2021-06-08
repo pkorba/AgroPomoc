@@ -41,8 +41,9 @@ public class NoteBalanceActivity extends AppCompatActivity {
         balanceTextView = findViewById(R.id.noteBalanceBalanceTextView);
         balanceTextView.setText("—");
         button = findViewById(R.id.noteBalanceButton);
+        date1 = new Date(0);
         date2 = Calendar.getInstance().getTime();
-        datePicker1.setText(fmt.format(new Date(0)));
+        datePicker1.setText(fmt.format(date1));
         datePicker2.setText(fmt.format(date2));
     }
 
@@ -89,9 +90,15 @@ public class NoteBalanceActivity extends AppCompatActivity {
         balanceInteger += balanceDecimal / 100;
         balanceDecimal %= 100;
 
-        incomeTextView.setText(String.format("%d.%d zł", incomeInteger, Math.abs(incomeDecimal)));
-        expenseTextView.setText(String.format("%d.%d zł", Math.abs(expenseInteger), Math.abs(expenseDecimal)));
-        balanceTextView.setText(String.format("%d.%d zł", balanceInteger, Math.abs(balanceDecimal)));
+        String incomeStr = String.format("%d.%2d", incomeInteger, Math.abs(incomeDecimal)).replace(" ", "0");
+        incomeStr = incomeStr + " zł";
+        incomeTextView.setText(incomeStr);
+        String expenseStr = String.format("%d.%2d", Math.abs(expenseInteger), Math.abs(expenseDecimal)).replace(" ", "0");
+        expenseStr = expenseStr + " zł";
+        expenseTextView.setText(expenseStr);
+        String balanceStr = String.format("%d.%2d", balanceInteger, Math.abs(balanceDecimal)).replace(" ", "0");
+        balanceStr = balanceStr + " zł";
+        balanceTextView.setText(balanceStr);
     }
 
     class innerFirstDate implements DatePickerDialog.OnDateSetListener {
