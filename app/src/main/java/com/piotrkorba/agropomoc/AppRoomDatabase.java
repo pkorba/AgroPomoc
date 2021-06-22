@@ -8,6 +8,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import org.json.JSONArray;
@@ -43,8 +44,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     // Create database
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppRoomDatabase.class, "app_database")
-                            // Wipes and rebuilds instead of migrating if no Migration object.
-                            .fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_5_6)
                             .addCallback(sRoomDatabaseCallback)
                             .build();
 
@@ -57,6 +57,13 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // Empty migration - database migration currently doesn't alter database schema.
+        }
+    };
 
     // Populate the database with initial data set only if database is empty.
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {

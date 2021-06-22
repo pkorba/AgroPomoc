@@ -122,4 +122,6 @@
     <string name="note_balance_income_label">SUMA WPŁAT:</string>
     <string name="note_balance_expense_label">SUMA WYDATKÓW:</string>
     <string name="note_balance_balance_label">BILANS:</string>
+    <string name="sor_registry_update_available">Dostępna aktualizacja rejestru ŚOR</string>
+    <string name="sor_registry_update_button">Aktualizuj</string>
 </resources>
