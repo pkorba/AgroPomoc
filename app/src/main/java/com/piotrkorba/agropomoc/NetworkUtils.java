@@ -23,13 +23,21 @@ import java.net.URL;
  * Class contains methods used to fetch assets through the network.
  */
 public class NetworkUtils {
+    /*
+    LOCAL TESTING
     private static final String PROTOCOL = "http";
     private static final String HOST = "10.0.2.2";
     private static final int PORT = 8000;
     private static final String FILE = "rejestr.json";
     private static final String VERSION_FILE = "version";
+    */
+    private static final String PROTOCOL = "https";
+    private static final String HOST = "gitlab.com";
+    private static final int PORT = 443;
+    private static final String FILE = "/ondondil/agropomoc/-/raw/master/rejestr.json";
+    private static final String VERSION_FILE = "/ondondil/agropomoc/-/raw/master/version";
 
-    /**
+     /**
      * Used to download full ŚOR registry content from remote server.
      * @return String object containing registry content
      */

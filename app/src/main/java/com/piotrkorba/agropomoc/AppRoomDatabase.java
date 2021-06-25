@@ -89,41 +89,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 registryDao.setSnackbar(false);
                 registryDao.updateVersionNumber(0);
             }
-            /*
-            // Don't download records on the first run
-            if (mDao.anyProduct().length < 1) {
-                mDao.deleteAll();
-                mDao.resetAutoincrement();
-                String str = NetworkUtils.getRegistryContent();
-                if (str != null) {
-                    JSONArray ja = NetworkUtils.convertStringJSON(str);
-                    try {
-                        for (int i = 0; i < ja.length(); ++i) {
-                            JSONObject jo = ja.getJSONObject(i);
-                            Product product = new Product(
-                                    jo.getString("nazwa"),
-                                    jo.getString("NrZezw"),
-                                    jo.getLong("TerminZezw"),
-                                    jo.getLong("TerminDoSprzedazy"),
-                                    jo.getLong("TerminDoStosowania"),
-                                    jo.getString("Rodzaj"),
-                                    jo.getString("Substancja_czynna"),
-                                    jo.getString("uprawa"),
-                                    jo.getString("agrofag"),
-                                    jo.getString("dawka"),
-                                    jo.getString("termin"),
-                                    jo.getString("nazwa_grupy"),
-                                    jo.getString("maloobszarowe"),
-                                    jo.getString("zastosowanie/uzytkownik"),
-                                    jo.getString("etykieta"));
-                            mDao.insert(product);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-             */
             return null;
         }
     }

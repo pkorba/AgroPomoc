@@ -36,6 +36,7 @@ public class SingleProductActivity extends AppCompatActivity {
     private final String fileMimeType = "application/pdf";
     private String fileUriString;
     Context mContext;
+    private final String baseProductURL = "https://gitlab.com/ondondil/agropomoc/-/raw/master";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +139,8 @@ public class SingleProductActivity extends AppCompatActivity {
                         // Check network connection
                         if (NetworkUtils.checkNetworkConnection(new WeakReference<>(getApplicationContext()))) {
                             // Download data sheet for a Product and get its unique ID.
-                            downloadID = NetworkUtils.downloadLabel(getApplicationContext(), product.getEtykieta(), product.getNazwa());
+                            String productURL = baseProductURL + product.getEtykieta();
+                            downloadID = NetworkUtils.downloadLabel(getApplicationContext(), productURL, product.getNazwa());
                         } else {
                             Snackbar.make(v, R.string.no_internet_connection, 5);
                         }
