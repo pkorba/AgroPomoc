@@ -105,8 +105,8 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
             public void onChanged(Boolean aBoolean) {
                 if (firstSnackbar && aBoolean) {
                     firstSnackbar = false;
-                    Snackbar snackbar = Snackbar.make(recyclerView, "Dostępna aktualizacja rejestru ŚOR", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setAction("Aktualizuj", new updateClickListener());
+                    Snackbar snackbar = Snackbar.make(recyclerView, R.string.sor_registry_update_available, Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setAction(R.string.sor_registry_update_button, new updateClickListener());
                     snackbar.show();
                 }
             }
@@ -122,6 +122,7 @@ public class SorActivity extends AppCompatActivity implements SearchView.OnQuery
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

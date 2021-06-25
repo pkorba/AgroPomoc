@@ -2,7 +2,7 @@
     <string name="app_name">AgroPomoc</string>
     <string name="button_sor">ŚOR</string>
     <string name="button_calculator">Kalkulator</string>
-    <string name="button_notes">Notatnik</string>
+    <string name="button_notes">Wpływy Wydatki</string>
     <string name="button_todo">Zadania</string>
     <string name="search">Szukaj</string>
     <string name="button_download_label">Pobierz etykietę</string>
@@ -84,6 +84,10 @@
     <string name="calc4row_distance_label">Odległość między środkami rzędów</string>
     <string name="calc4row_distance">Odległość między środkami rzędów</string>
     <string name="calc4row_distance_unit">cm</string>
+    <string name="title_activity_notes">Wpływy i wydatki</string>
+    <string name="textview_notes_item_date">YYYY/MM/DD</string>
+    <string name="textview_notes_item_title">Tytuł notatki</string>
+    <string name="textview_notes_item_currency">XXX.XX zł</string>
 
     <string-array name="areaDensity">
         <item>kg/Ha</item>
@@ -101,5 +105,23 @@
         <item>kg</item>
         <item>t</item>
     </string-array>
-
+    <string name="notes_radio_button_expense">Wydatek</string>
+    <string name="notes_radio_button_income">Wpływ</string>
+    <string name="note_detail_dialog_title">Usuń element</string>
+    <string name="note_detail_dialog_message">Czy na pewno chcesz usunąć ten element?</string>
+    <string name="note_detail_dialog_positive_button">TAK</string>
+    <string name="note_detail_dialog_negative_button">ANULUJ</string>
+    <string name="note_saved_toast">Zapisano nowy element</string>
+    <string name="note_not_saved_toast">Nie zapisano elementu</string>
+    <string name="note_edited_toast">Zmieniono zawartość elementu</string>
+    <string name="note_something_wrong_toast">Coś poszło nie tak…</string>
+    <string name="note_deleted_toast">Usunięto element</string>
+    <string name="note_balance_info">Wybierz okres na podstawie którego ma zostać obliczony bilans wydatków i wpłat:</string>
+    <string name="note_balance_hyphen">—</string>
+    <string name="note_balance_button">Oblicz</string>
+    <string name="note_balance_income_label">SUMA WPŁAT:</string>
+    <string name="note_balance_expense_label">SUMA WYDATKÓW:</string>
+    <string name="note_balance_balance_label">BILANS:</string>
+    <string name="sor_registry_update_available">Dostępna aktualizacja rejestru ŚOR</string>
+    <string name="sor_registry_update_button">Aktualizuj</string>
 </resources>

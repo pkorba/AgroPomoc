@@ -19,7 +19,6 @@ public class CalculatorActivity extends AppCompatActivity {
         TextView textView = (TextView) view;
         int id = textView.getId();
         Intent intent;
-        // TODO: Create and launch calculator target acitivities
         switch (id) {
             case R.id.calculator_item1:
                 intent = new Intent(this, SeedRateActivity.class);

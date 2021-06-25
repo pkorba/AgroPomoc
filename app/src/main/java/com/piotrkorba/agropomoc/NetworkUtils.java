@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -22,13 +23,21 @@ import java.net.URL;
  * Class contains methods used to fetch assets through the network.
  */
 public class NetworkUtils {
+    /*
+    LOCAL TESTING
     private static final String PROTOCOL = "http";
     private static final String HOST = "10.0.2.2";
     private static final int PORT = 8000;
     private static final String FILE = "rejestr.json";
     private static final String VERSION_FILE = "version";
+    */
+    private static final String PROTOCOL = "https";
+    private static final String HOST = "gitlab.com";
+    private static final int PORT = 443;
+    private static final String FILE = "/ondondil/agropomoc/-/raw/master/rejestr.json";
+    private static final String VERSION_FILE = "/ondondil/agropomoc/-/raw/master/version";
 
-    /**
+     /**
      * Used to download full ŚOR registry content from remote server.
      * @return String object containing registry content
      */
@@ -99,8 +108,8 @@ public class NetworkUtils {
      * @param context activity context
      * @return true if network connection available, false otherwise
      */
-    public static boolean checkNetworkConnection(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean checkNetworkConnection(WeakReference<Context> context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.get().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
         if (connectivityManager != null) {
             networkInfo = connectivityManager.getActiveNetworkInfo();

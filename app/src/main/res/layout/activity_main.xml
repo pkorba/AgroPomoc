@@ -37,21 +37,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_notes"
+        android:onClick="onCLickNotesButton"
         android:text="@string/button_notes"
-        app:layout_constraintEnd_toStartOf="@+id/button_todo"
+        app:layout_constraintEnd_toEndOf="@+id/button_sor"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_sor" />
 
-    <Button
-        android:id="@+id/button_todo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:drawableTop="@drawable/ic_notifications"
-        android:text="@string/button_todo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_notes"
-        app:layout_constraintTop_toBottomOf="@+id/button_calculator" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
